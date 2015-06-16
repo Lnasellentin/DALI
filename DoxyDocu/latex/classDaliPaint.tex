@@ -1,0 +1,299 @@
+\hypertarget{classDaliPaint}{\section{Dali\-Paint Class Reference}
+\label{classDaliPaint}\index{Dali\-Paint@{Dali\-Paint}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliPaint_ac11f93a8b8fef1b6297b6ae0f8773a7e}{typedef vector$<$ vector$<$ vector\\*
+$<$ double $>$ $>$ $>$ {\bfseries flex}}\label{classDaliPaint_ac11f93a8b8fef1b6297b6ae0f8773a7e}
+
+\item 
+\hypertarget{classDaliPaint_a41852dac3b5c43992a37156bd4003dc8}{typedef vector$<$ vector$<$ vector\\*
+$<$ vector$<$ double $>$ $>$ $>$ $>$ {\bfseries quarx}}\label{classDaliPaint_a41852dac3b5c43992a37156bd4003dc8}
+
+\item 
+\hypertarget{classDaliPaint_a4223372000c10516d596b2711c8f6e34}{typedef vector$<$ vector$<$ vector\\*
+$<$ vector$<$ vector$<$ double $>$ $>$ $>$ $>$ $>$ {\bfseries pent}}\label{classDaliPaint_a4223372000c10516d596b2711c8f6e34}
+
+\item 
+\hypertarget{classDaliPaint_a9ec046b9290d513125a98b3029c19137}{typedef vector$<$ vector$<$ vector\\*
+$<$ vector$<$ vector$<$ vector\\*
+$<$ double $>$ $>$ $>$ $>$ $>$ $>$ {\bfseries hex}}\label{classDaliPaint_a9ec046b9290d513125a98b3029c19137}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDaliPaint_a271c2e670c70c456797d0da0c1d92d07}{Dali\-Paint} (int theo, vector$<$ double $>$ fidin, string outdir\-\_\-name, int derivorder\-\_\-in)
+\item 
+\hypertarget{classDaliPaint_a671dd06b3014d1fe082df8e87342119c}{void {\bfseries Free} ()}\label{classDaliPaint_a671dd06b3014d1fe082df8e87342119c}
+
+\item 
+void \hyperlink{classDaliPaint_a1fd6f80ad97e8acf5211393bec950445}{Set\-Bounds} (vector$<$ double $>$ lowerin, vector$<$ double $>$ upperin)
+\item 
+\hypertarget{classDaliPaint_a4c72640e346e8215c0094b2ffee19f61}{void {\bfseries Accept} ()}\label{classDaliPaint_a4c72640e346e8215c0094b2ffee19f61}
+
+\item 
+void \hyperlink{classDaliPaint_a627a9e5ea61d307cb46208c8384ab4e8}{sampling} (int repetitions, vector$<$ double $>$ sigmas, vector$<$ double $>$ startx, int seed)
+\item 
+void \hyperlink{classDaliPaint_a0891e14f835f9d47f07626534c48fdc9}{print\-\_\-chain} ()
+\item 
+\hypertarget{classDaliPaint_affb71713e0ea7523da9421d7469cc725}{void {\bfseries best\-\_\-fit} ()}\label{classDaliPaint_affb71713e0ea7523da9421d7469cc725}
+
+\item 
+void \hyperlink{classDaliPaint_af2498c6aa573ed4495bd4dd6dff6b559}{gridevaluation} (string outname, double binwidth)
+\item 
+void \hyperlink{classDaliPaint_a5d7733050257d8b34c12ed3ed47a1fed}{margin\-Down} (int p1, int p2, string outname, double binwidth=0.\-03)
+\item 
+void \hyperlink{classDaliPaint_a624e6e3ca606d45692636765242af635}{Dali\-Flash\-Back\-\_\-\-Fish} (string filename, int minus)
+\item 
+void \hyperlink{classDaliPaint_a0d7210f5b05e4734763c961be08c77a0}{Dali\-Flash\-Back\-\_\-\-Sabg} (string filename, int minus)
+\item 
+void \hyperlink{classDaliPaint_a82625446a081936b9fd6cd96f23e997c}{Dali\-Flash\-Back\-\_\-\-Qabgd} (string filename, int minus)
+\item 
+void \hyperlink{classDaliPaint_a998c9b573ce41a2cc3f7cbad47eb5263}{Dali\-Flash\-Back\-\_\-\-Pabgde} (string filename, int minus)
+\item 
+void \hyperlink{classDaliPaint_acab49907b4f9c5889f1833e2f02fd54d}{Dali\-Flash\-Back\-\_\-\-Habgdef} (string filename, int minus)
+\item 
+virtual double \hyperlink{classDaliPaint_a077c7a0233c461cd316b74a889ad6270}{To\-Be\-Sampled} (vector$<$ double $>$ x)
+\item 
+\hypertarget{classDaliPaint_ac96cc46976849826c5d6c8a36b6738a4}{double {\bfseries Log\-Like} (vector$<$ double $>$ peval)}\label{classDaliPaint_ac96cc46976849826c5d6c8a36b6738a4}
+
+\item 
+\hypertarget{classDaliPaint_abc7235b287a0724e0240975bbfaee982}{void {\bfseries Fisher\-Margins} (gsl\-\_\-matrix $\ast$fisherin, int dim, double binwidths, int ex)}\label{classDaliPaint_abc7235b287a0724e0240975bbfaee982}
+
+\item 
+\hypertarget{classDaliPaint_ad99cfa41674c3a6696d4b80d491baf98}{void {\bfseries Write\-Chain\-To\-File} ()}\label{classDaliPaint_ad99cfa41674c3a6696d4b80d491baf98}
+
+\item 
+void \hyperlink{classDaliPaint_a0f445163538f24c880c1db00b36e95ac}{Load\-Chain\-From\-File} (string filename)
+\item 
+\hypertarget{classDaliPaint_a20bd310eb01d170d936d88420db6c7ae}{void {\bfseries Prepare\-Cholesky} ()}\label{classDaliPaint_a20bd310eb01d170d936d88420db6c7ae}
+
+\item 
+void \hyperlink{classDaliPaint_ad099767cb66f036a0462b214d5d863f0}{Add\-Fishers} (gsl\-\_\-matrix $\ast$fisher\-\_\-in)
+\item 
+void \hyperlink{classDaliPaint_a580450cad5f6e7d360840ebcb6ddcda0}{Add\-Sabgs} (flex Sabg\-\_\-in)
+\item 
+void \hyperlink{classDaliPaint_ad340988cbe7932902bc974c533be8852}{Add\-Qabgds} (quarx Qabgd\-\_\-in)
+\item 
+void \hyperlink{classDaliPaint_abd836e975a3815a10d1f43fdcb3eb47d}{Add\-Pabgdes} (pent Pabgdef\-\_\-in)
+\item 
+void \hyperlink{classDaliPaint_a7ed07e90dfd95e2352fddc1e593c01f8}{Add\-Habgdefs} (hex Habgdef\-\_\-in)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliPaint_a52d99f22afec8f3e1832b9f405400d4a}{vector$<$ vector$<$ double $>$ $>$ {\bfseries chain}}\label{classDaliPaint_a52d99f22afec8f3e1832b9f405400d4a}
+
+\item 
+\hypertarget{classDaliPaint_a7d24971d1939a4477362b686ae19c0a7}{vector$<$ double $>$ {\bfseries chain\-\_\-y}}\label{classDaliPaint_a7d24971d1939a4477362b686ae19c0a7}
+
+\item 
+\hypertarget{classDaliPaint_ac03f1785efbf019e44d30afb75ffa8be}{vector$<$ string $>$ {\bfseries paramnames}}\label{classDaliPaint_ac03f1785efbf019e44d30afb75ffa8be}
+
+\item 
+\hypertarget{classDaliPaint_a6cc54c082cae691363f15ceb4f6036a8}{string {\bfseries outdir}}\label{classDaliPaint_a6cc54c082cae691363f15ceb4f6036a8}
+
+\item 
+\hypertarget{classDaliPaint_ac8d20853c9c350d347ff802da10791f1}{vector$<$ double $>$ {\bfseries fid}}\label{classDaliPaint_ac8d20853c9c350d347ff802da10791f1}
+
+\item 
+\hypertarget{classDaliPaint_a4933671dff1c6ae9c4f78d09d0916369}{int {\bfseries theodim}}\label{classDaliPaint_a4933671dff1c6ae9c4f78d09d0916369}
+
+\item 
+\hypertarget{classDaliPaint_aa451271daf85ef2aefc4a455603196fe}{vector$<$ double $>$ {\bfseries upperbounds}}\label{classDaliPaint_aa451271daf85ef2aefc4a455603196fe}
+
+\item 
+\hypertarget{classDaliPaint_a524e6ea9f6be8d9a746a9ddc01c2e5ed}{vector$<$ double $>$ {\bfseries lowerbounds}}\label{classDaliPaint_a524e6ea9f6be8d9a746a9ddc01c2e5ed}
+
+\item 
+\hypertarget{classDaliPaint_a9bba1a18975c0f16547d68d5fa2b491e}{bool {\bfseries boundsgiven}}\label{classDaliPaint_a9bba1a18975c0f16547d68d5fa2b491e}
+
+\item 
+\hypertarget{classDaliPaint_a11ecaa214f7bfd4fbb4b84b24811744d}{int {\bfseries derivorder}}\label{classDaliPaint_a11ecaa214f7bfd4fbb4b84b24811744d}
+
+\item 
+\hypertarget{classDaliPaint_a4dfafed25db9b4cf2b3746b6dee5f01d}{gsl\-\_\-matrix $\ast$ {\bfseries fisher}}\label{classDaliPaint_a4dfafed25db9b4cf2b3746b6dee5f01d}
+
+\item 
+\hypertarget{classDaliPaint_ad292ecfcf376f4fc2a4695c26ce5c70d}{flex {\bfseries Sabg}}\label{classDaliPaint_ad292ecfcf376f4fc2a4695c26ce5c70d}
+
+\item 
+\hypertarget{classDaliPaint_a6a82d112de59916a89059532ae1568e8}{quarx {\bfseries Qabgd}}\label{classDaliPaint_a6a82d112de59916a89059532ae1568e8}
+
+\item 
+\hypertarget{classDaliPaint_a4439f3403633e03dbdb2612adca64c23}{pent {\bfseries Pabgde}}\label{classDaliPaint_a4439f3403633e03dbdb2612adca64c23}
+
+\item 
+\hypertarget{classDaliPaint_a4986a5e3034350a09c70a5a596706c27}{hex {\bfseries Habgdef}}\label{classDaliPaint_a4986a5e3034350a09c70a5a596706c27}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classDaliPaint_a271c2e670c70c456797d0da0c1d92d07}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Paint@{Dali\-Paint}}
+\index{Dali\-Paint@{Dali\-Paint}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Paint}]{\setlength{\rightskip}{0pt plus 5cm}Dali\-Paint\-::\-Dali\-Paint (
+\begin{DoxyParamCaption}
+\item[{int}]{theo, }
+\item[{vector$<$ double $>$}]{fidin, }
+\item[{string}]{outdir\-\_\-name, }
+\item[{int}]{derivorder\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a271c2e670c70c456797d0da0c1d92d07}
+Constructor of the \hyperlink{classDaliPaint}{Dali\-Paint} class. This is the only class you will need if you load Dali tensors from a file, instead of calculating them again. It either M\-C\-M\-C samples the Dali-\/approximated likelihood, or it evaluates it on a grid.
+\begin{DoxyItemize}
+\item theo\-: number of theoretical parameters
+\item fidin\-: vector of length theo that holds the values of the fiducial parameters/the maximum likelihood parameters -\/outdir\-\_\-name\-: a name for the folder in which the results are stored. If the folder does not exist, it is created. If it exists, it is not overwritten.
+\item derivorder\-\_\-in\-: the highest order of the derivatives that were included in the Dali tensors. It can be either 2 or 3. If it is set to three, M\-C\-M\-C will run slower, since at each sample, the code must also contract the Pabgde and Habgdef tensors, which takes a bit. 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\hypertarget{classDaliPaint_ad099767cb66f036a0462b214d5d863f0}{\index{Dali\-Paint@{Dali\-Paint}!Add\-Fishers@{Add\-Fishers}}
+\index{Add\-Fishers@{Add\-Fishers}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Add\-Fishers}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Add\-Fishers (
+\begin{DoxyParamCaption}
+\item[{gsl\-\_\-matrix $\ast$}]{fisher\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_ad099767cb66f036a0462b214d5d863f0}
+Adds the provided fisher matrix fisher\-\_\-in to the fisher matrix of the \hyperlink{classDaliPaint}{Dali\-Paint} object. The matrices must have the same dimension, and the rows and columns of both matrices must represent the same parameters. \hypertarget{classDaliPaint_a7ed07e90dfd95e2352fddc1e593c01f8}{\index{Dali\-Paint@{Dali\-Paint}!Add\-Habgdefs@{Add\-Habgdefs}}
+\index{Add\-Habgdefs@{Add\-Habgdefs}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Add\-Habgdefs}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Add\-Habgdefs (
+\begin{DoxyParamCaption}
+\item[{hex}]{Habgdef\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a7ed07e90dfd95e2352fddc1e593c01f8}
+Adds Habgdef-\/tensors of different experiments. \hypertarget{classDaliPaint_abd836e975a3815a10d1f43fdcb3eb47d}{\index{Dali\-Paint@{Dali\-Paint}!Add\-Pabgdes@{Add\-Pabgdes}}
+\index{Add\-Pabgdes@{Add\-Pabgdes}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Add\-Pabgdes}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Add\-Pabgdes (
+\begin{DoxyParamCaption}
+\item[{pent}]{Pabgde\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_abd836e975a3815a10d1f43fdcb3eb47d}
+Adds Pabgde-\/tensors of different experiments. \hypertarget{classDaliPaint_ad340988cbe7932902bc974c533be8852}{\index{Dali\-Paint@{Dali\-Paint}!Add\-Qabgds@{Add\-Qabgds}}
+\index{Add\-Qabgds@{Add\-Qabgds}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Add\-Qabgds}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Add\-Qabgds (
+\begin{DoxyParamCaption}
+\item[{quarx}]{Qabgd\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_ad340988cbe7932902bc974c533be8852}
+Adds Qabgd-\/tensors of different experiments. \hypertarget{classDaliPaint_a580450cad5f6e7d360840ebcb6ddcda0}{\index{Dali\-Paint@{Dali\-Paint}!Add\-Sabgs@{Add\-Sabgs}}
+\index{Add\-Sabgs@{Add\-Sabgs}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Add\-Sabgs}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Add\-Sabgs (
+\begin{DoxyParamCaption}
+\item[{flex}]{Sabg\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a580450cad5f6e7d360840ebcb6ddcda0}
+Adds Sabg-\/tensors of different experiments. \hypertarget{classDaliPaint_a624e6e3ca606d45692636765242af635}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Flash\-Back\-\_\-\-Fish@{Dali\-Flash\-Back\-\_\-\-Fish}}
+\index{Dali\-Flash\-Back\-\_\-\-Fish@{Dali\-Flash\-Back\-\_\-\-Fish}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Flash\-Back\-\_\-\-Fish}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Dali\-Flash\-Back\-\_\-\-Fish (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{int}]{minus}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a624e6e3ca606d45692636765242af635}
+Loads a Fisher matrix from the file filename. \hypertarget{classDaliPaint_acab49907b4f9c5889f1833e2f02fd54d}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Flash\-Back\-\_\-\-Habgdef@{Dali\-Flash\-Back\-\_\-\-Habgdef}}
+\index{Dali\-Flash\-Back\-\_\-\-Habgdef@{Dali\-Flash\-Back\-\_\-\-Habgdef}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Flash\-Back\-\_\-\-Habgdef}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Dali\-Flash\-Back\-\_\-\-Habgdef (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{int}]{minus}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_acab49907b4f9c5889f1833e2f02fd54d}
+loads the Habgdef tensor from a file. Minus allows you to subtract an offset in the index-\/number\-: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1. \hypertarget{classDaliPaint_a998c9b573ce41a2cc3f7cbad47eb5263}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Flash\-Back\-\_\-\-Pabgde@{Dali\-Flash\-Back\-\_\-\-Pabgde}}
+\index{Dali\-Flash\-Back\-\_\-\-Pabgde@{Dali\-Flash\-Back\-\_\-\-Pabgde}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Flash\-Back\-\_\-\-Pabgde}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Dali\-Flash\-Back\-\_\-\-Pabgde (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{int}]{minus}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a998c9b573ce41a2cc3f7cbad47eb5263}
+loads the Pabgde tensor from a file. Minus allows you to subtract an offset in the index-\/number\-: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1. \hypertarget{classDaliPaint_a82625446a081936b9fd6cd96f23e997c}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Flash\-Back\-\_\-\-Qabgd@{Dali\-Flash\-Back\-\_\-\-Qabgd}}
+\index{Dali\-Flash\-Back\-\_\-\-Qabgd@{Dali\-Flash\-Back\-\_\-\-Qabgd}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Flash\-Back\-\_\-\-Qabgd}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Dali\-Flash\-Back\-\_\-\-Qabgd (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{int}]{minus}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a82625446a081936b9fd6cd96f23e997c}
+loads the Qabgd tensor from a file. Minus allows you to subtract an offset in the index-\/number\-: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1. \hypertarget{classDaliPaint_a0d7210f5b05e4734763c961be08c77a0}{\index{Dali\-Paint@{Dali\-Paint}!Dali\-Flash\-Back\-\_\-\-Sabg@{Dali\-Flash\-Back\-\_\-\-Sabg}}
+\index{Dali\-Flash\-Back\-\_\-\-Sabg@{Dali\-Flash\-Back\-\_\-\-Sabg}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Dali\-Flash\-Back\-\_\-\-Sabg}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Dali\-Flash\-Back\-\_\-\-Sabg (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{int}]{minus}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a0d7210f5b05e4734763c961be08c77a0}
+Loads the Sabg tensor from a file \hypertarget{classDaliPaint_af2498c6aa573ed4495bd4dd6dff6b559}{\index{Dali\-Paint@{Dali\-Paint}!gridevaluation@{gridevaluation}}
+\index{gridevaluation@{gridevaluation}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{gridevaluation}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::gridevaluation (
+\begin{DoxyParamCaption}
+\item[{string}]{outname, }
+\item[{double}]{binwidth}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_af2498c6aa573ed4495bd4dd6dff6b559}
+Makes a plot of the approximated likelihood on a grid. Currently, this is only possible, if you use theodim ==2. The resulting plot is more smooth that the M\-C\-M\-C-\/generated plot, but else the code does intrinsically use the same likelihood approximation. -\/outname\-: Name for the plot -\/binwidth\-: some double between 0 and 1. It sets the gridspacing in percent of the prior range. Typical values will be in the low percent level, like 0.\-03 or 0.\-001 \hypertarget{classDaliPaint_a0f445163538f24c880c1db00b36e95ac}{\index{Dali\-Paint@{Dali\-Paint}!Load\-Chain\-From\-File@{Load\-Chain\-From\-File}}
+\index{Load\-Chain\-From\-File@{Load\-Chain\-From\-File}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Load\-Chain\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Load\-Chain\-From\-File (
+\begin{DoxyParamCaption}
+\item[{string}]{filename}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a0f445163538f24c880c1db00b36e95ac}
+Loads an M\-C\-M\-C chain from the file specified by filename. \hypertarget{classDaliPaint_a5d7733050257d8b34c12ed3ed47a1fed}{\index{Dali\-Paint@{Dali\-Paint}!margin\-Down@{margin\-Down}}
+\index{margin\-Down@{margin\-Down}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{margin\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::margin\-Down (
+\begin{DoxyParamCaption}
+\item[{int}]{p1, }
+\item[{int}]{p2, }
+\item[{string}]{outname, }
+\item[{double}]{binwidth = {\ttfamily 0.03}}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a5d7733050257d8b34c12ed3ed47a1fed}
+Marginalizes the M\-C\-M\-C chain and creates a python file and a data file. From these, a plot can be generated. The function also creates a gnuplot file, such that the user can rotate the plot in three dimensions. This is handy if the confidence contours look strange and one doesn't know why. Uses the G\-S\-L for 2d-\/histogramming. -\/p1 and p2\-: the two parameters on the axes of your 2d-\/plot. All other parameters will be marginalized out. -\/outname\-: a name four your data file and the python executable -\/binwidth\-: some double between 0 and 1. Specifies the width of a bin, in percent of the plotting range. If set too large, no small scale structure will be seen in the plot. If set too low, the plot will look like a dissolving fizzy tablet. 0.\-03 is a good guess. \hypertarget{classDaliPaint_a0891e14f835f9d47f07626534c48fdc9}{\index{Dali\-Paint@{Dali\-Paint}!print\-\_\-chain@{print\-\_\-chain}}
+\index{print\-\_\-chain@{print\-\_\-chain}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{print\-\_\-chain}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::print\-\_\-chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a0891e14f835f9d47f07626534c48fdc9}
+Prints the Chain to the screen. Use for debugging only. \hypertarget{classDaliPaint_a627a9e5ea61d307cb46208c8384ab4e8}{\index{Dali\-Paint@{Dali\-Paint}!sampling@{sampling}}
+\index{sampling@{sampling}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{sampling}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::sampling (
+\begin{DoxyParamCaption}
+\item[{int}]{repetitions, }
+\item[{vector$<$ double $>$}]{sigmas, }
+\item[{vector$<$ double $>$}]{startx, }
+\item[{int}]{seed}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a627a9e5ea61d307cb46208c8384ab4e8}
+A cute little M\-C\-M\-C-\/sampler (Metropolis Hastings). The sampler starts at the best fit if startx is set to be the fiducial point (recommended), and will therefore not have any burn in.
+\begin{DoxyItemize}
+\item repetitions\-: The number of samples that it will try. This is N\-O\-T the number of samples that is in the end accepted.
+\item sigmas\-: A vector of proposed variances along the parameter axes. This is taken as a diagonal proposal matrix for the sampler. Usually, you will set it to equal diagonal entries of the Fisher matrix (or its inverse...). If the Fisher matrix is singular, please specify some fraction of your prior range as proposal variance. Must have the same dimension as your number of parameters.
+\item startx\-: the starting point of the sampler. Must have the same dimension as your number of parameters.
+\item seed\-: an integer that seeds the random number generator. If two chains of the same length are run with the same seed, the chains will be identical. 
+\end{DoxyItemize}\hypertarget{classDaliPaint_a1fd6f80ad97e8acf5211393bec950445}{\index{Dali\-Paint@{Dali\-Paint}!Set\-Bounds@{Set\-Bounds}}
+\index{Set\-Bounds@{Set\-Bounds}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{Set\-Bounds}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Paint\-::\-Set\-Bounds (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $>$}]{lowerin, }
+\item[{vector$<$ double $>$}]{upperin}
+\end{DoxyParamCaption}
+)}}\label{classDaliPaint_a1fd6f80ad97e8acf5211393bec950445}
+Allows the user to set upper and lower bounds for the M\-C\-M\-C sampler. This might be handy, if you work with a degenerate Fisher matrix. -\/lowerin\-: vector of length theodim that holds the lower bounds on the parameters -\/upperin\-: as lowerin, just with the upper bounds \hypertarget{classDaliPaint_a077c7a0233c461cd316b74a889ad6270}{\index{Dali\-Paint@{Dali\-Paint}!To\-Be\-Sampled@{To\-Be\-Sampled}}
+\index{To\-Be\-Sampled@{To\-Be\-Sampled}!DaliPaint@{Dali\-Paint}}
+\subsubsection[{To\-Be\-Sampled}]{\setlength{\rightskip}{0pt plus 5cm}double Dali\-Paint\-::\-To\-Be\-Sampled (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $>$}]{x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classDaliPaint_a077c7a0233c461cd316b74a889ad6270}
+Virtual function -\/ not a P\-U\-R\-E virtual function. You can overwrite it, but you don't have to. It is the function which the M\-C\-M\-C sampler samples. If you don't overwrite it, D\-A\-L\-I will sample the D\-A\-L\-I-\/approximated likelihood. You may want to overwrite it, if you also want to sample the unapproximated likelihood.... but there are really much nicer M\-C\-M\-C samplers on the market to do so! If you don't overwrite this function, you can ignore it \-:)
+\begin{DoxyItemize}
+\item x\-: the vector in which your likelihood depends. 
+\end{DoxyItemize}
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Dali\-Paint.\-h\item 
+Dali\-Paint.\-cpp\end{DoxyCompactItemize}

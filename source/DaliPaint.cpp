@@ -1,0 +1,1329 @@
+/*
+ DaliPaint source code
+ Ln(a) Sellentin
+ Universität Heidelberg
+ */
+
+
+#include "DaliPaint.h"
+
+
+/*Init minx and maxx to the fiducial point such that there is at least some point from which the distance of the parameter grid can be estimated in the plots. If the MCMC sampler doesn't scatter into one direction, you need this.*/
+
+/** Constructor of the DaliPaint class. This is the only class you will need if you load Dali tensors from a file, instead of calculating them again. It either MCMC samples the Dali-approximated likelihood, or it evaluates it on a grid.
+ * - theo: number of theoretical parameters
+ * - fidin: vector of length theo that holds the values of the fiducial parameters/the maximum likelihood parameters
+ * -outdir_name: a name for the folder in which the results are stored. If the folder does not exist, it is created. If it exists, it is not overwritten.
+ * - derivorder_in: the highest order of the derivatives that were included in the Dali tensors. It can be either 2 or 3. If it is set to three, MCMC will run slower, since at each sample, the code must also contract the Pabgde and Habgdef tensors, which takes a bit.
+ **/
+DaliPaint::DaliPaint(int theo, vector<double> fidin, string outdir_name, int derivorder_in):theodim(theo), fid(fidin), minx(fidin), maxx(fidin), outdir(outdir_name)
+{
+
+    if((derivorder_in != 2 ) && (derivorder_in != 3))
+    {
+        cout << "derivorder can only be 2 or 3, since DALI only uses third derivatives at most." << endl;
+        abort();
+    }
+    derivorder = derivorder_in;
+
+    /*Determine whether Out-directory exists, and if not, create it*/
+    struct stat dircheck;
+
+    /*Function returns zero, if directory exists*/
+    if(stat(outdir.c_str(),&dircheck) == 0 && S_ISDIR(dircheck.st_mode))
+    {
+        cout << "Plotting output directory: " << outdir << endl;
+    }
+
+    else /*Make directory, if not existent*/
+    {
+
+        string createdirectory = (string)"mkdir " + outdir;
+
+        system(createdirectory.c_str());
+
+        cout << "Newly created plotting output directory: " << outdir << endl;
+    }
+
+
+
+
+    boundsgiven = 0;
+
+    /*no fisher matrix allocation here. It is a pointer,
+     * so if you pass the fisher matrix in the main,
+     * then it is enough*/
+
+    Sabg.resize(theo);
+    Qabgd.resize(theo);
+    Pabgde.resize(theo);
+    Habgdef.resize(theo);
+
+    for(int i = 0; i < theo; i++)
+    {
+        Sabg[i].resize(theo);
+        Qabgd[i].resize(theo);
+        Pabgde[i].resize(theo);
+        Habgdef[i].resize(theo);
+
+        for(int j = 0; j < theo; j++)
+        {
+            Sabg[i][j].resize(theo);
+            Qabgd[i][j].resize(theo);
+            Pabgde[i][j].resize(theo);
+            Habgdef[i][j].resize(theo);
+
+            for(int k = 0; k < theo; k++)
+            {
+                Sabg[i][j][k] = 0.0;
+                Qabgd[i][j][k].resize(theo);
+                Pabgde[i][j][k].resize(theo);
+                Habgdef[i][j][k].resize(theo);
+
+
+                for(int l = 0; l < theo; l++)
+                {
+                    Qabgd[i][j][k][l] = 0.0;
+                    Pabgde[i][j][k][l].resize(theo);
+                    Habgdef[i][j][k][l].resize(theo);
+
+                    for(int m = 0; m < theo; m++)
+                    {
+                        Pabgde[i][j][k][l][m] = 0.0;
+                        Habgdef[i][j][k][l][m].resize(theo);
+
+                        for(int n = 0; n < theo; n++)
+                        {
+                            Habgdef[i][j][k][l][m][n] = 0.0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Cholesky = gsl_matrix_alloc(theo, theo);
+    jump = gsl_vector_alloc(theo);
+    draw = gsl_vector_alloc(theo);
+    
+    paramnames.resize(theo);
+    tiny = 1e-10;
+    startflag = 0;
+    fisher_alloced =0;
+    loaded_chain =0;
+    flush = 0;
+    Cholesky_jump = 0;
+    
+}
+
+
+
+
+
+/**Loads a Fisher matrix from the file filename.**/
+void DaliPaint::DaliFlashBack_Fish(string filename, int minus)
+{
+
+    fisher = gsl_matrix_calloc(theodim, theodim);
+    fisher_alloced = 1;
+
+    cout << "Reading Fisher matrix in from file that should be formatted like the files created by Dali." << endl;
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File not found." << endl;
+        abort();
+    }
+
+
+    int a, b;
+    double hilf;
+
+    while(LeseDatei >> a >> b >> hilf)
+    {
+        gsl_matrix_set(fisher, (a - minus), (b-minus), hilf);
+    }
+
+    if(theodim < 15)
+    {
+        cout << "The read in Fisher matrix is...." << endl;
+        printmatrix(fisher, theodim, theodim);
+    }
+
+
+    LeseDatei.close();
+
+
+}
+
+
+
+/**Loads the Sabg tensor from a file**/
+void DaliPaint::DaliFlashBack_Sabg(string filename, int minus)
+{
+
+    cout << "Reading in from file, that should be formatted like the files created by Dali." << endl;
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File not found." << endl;
+        abort();
+    }
+
+
+    int a, b, c;
+    double hilf;
+
+    while(LeseDatei >> a >> b >> c >> hilf)
+    {
+        Sabg.at((a-minus)).at((b-minus)).at((c-minus)) = hilf;
+    }
+
+    LeseDatei.close();
+
+    if(theodim < 15)
+    {
+        cout << "The diagonal entries of Sabg are " << endl;
+        for(int i = 0; i <theodim; i++)
+        {
+            cout << i << i << i << " " << Sabg[i][i][i] << endl;
+        }
+    }
+
+
+}
+
+
+/**loads the Qabgd tensor from a file. Minus allows you to subtract an offset in the index-number: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1.**/
+void DaliPaint::DaliFlashBack_Qabgd(string filename, int minus)
+{
+    cout << "Reading in from file, that should be formatted like the files created by Dali." << endl;
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File not found." << endl;
+        abort();
+    }
+
+
+    int a, b, c, d;
+    double hilf;
+
+    while(LeseDatei >> a >> b >> c >> d >> hilf)
+    {
+        Qabgd.at((a-minus)).at((b-minus)).at((c-minus)).at((d-minus)) = hilf;
+    }
+
+    LeseDatei.close();
+
+    if(theodim < 15)
+    {
+        cout << "The diagonal entries of Qabgd are " << endl;
+        for(int i = 0; i <theodim; i++)
+        {
+            cout << i << i << i << i << " " << Qabgd[i][i][i][i] << endl;
+        }
+    }
+
+
+}
+
+
+
+/**loads the Pabgde tensor from a file. Minus allows you to subtract an offset in the index-number: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1.**/
+void DaliPaint::DaliFlashBack_Pabgde(string filename, int minus)
+{
+    cout << "Reading in from file, that should be formatted like the files created by Dali." << endl;
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File not found." << endl;
+        abort();
+    }
+
+
+    int a, b, c, d, e;
+    double hilf;
+
+    while(LeseDatei >> a >> b >> c >> d >> e >> hilf)
+    {
+        Pabgde.at((a-minus)).at((b-minus)).at((c-minus)).at((d-minus)).at((e-minus)) = hilf;
+	
+    }
+
+    LeseDatei.close();
+
+    if(theodim < 15)
+    {
+        cout << "The diagonal entries of Pabgde are " << endl;
+        for(int i = 0; i <theodim; i++)
+        {
+            cout << i << i << i << i << i << " " << Pabgde[i][i][i][i][i] << endl;
+        }
+    }
+
+
+}
+
+/**loads the Habgdef tensor from a file. Minus allows you to subtract an offset in the index-number: Maybe your file was created by a code that starts countin from one, while c++ starts counting from zero. Then you would use minus = 1.**/
+void DaliPaint::DaliFlashBack_Habgdef(string filename, int minus)
+{
+    cout << "Reading in from file, that should be formatted like the files created by Dali." << endl;
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File not found." << endl;
+        abort();
+    }
+
+
+    int a, b, c, d, e, f;
+    double hilf;
+
+    while(LeseDatei >> a >> b >> c >> d >> e >> f >> hilf)
+    {
+        Habgdef.at((a-minus)).at((b-minus)).at((c-minus)).at((d-minus)).at((e-minus)).at((f-minus)) = hilf;
+    }
+
+    LeseDatei.close();
+
+    if(theodim < 15)
+    {
+        cout << "The diagonal entries of Habgdef are " << endl;
+        for(int i = 0; i <theodim; i++)
+        {
+            cout << i << i << i << i << i << i << " " << Habgdef[i][i][i][i][i][i] << endl;
+        }
+    }
+
+
+}
+
+
+
+void DaliPaint::Free()
+{
+    if(fisher_alloced)
+        gsl_matrix_free(fisher);
+    
+    gsl_matrix_free(Cholesky);
+    gsl_vector_free(jump);
+    gsl_vector_free(draw);
+}
+
+
+
+/**Allows the user to set upper and lower bounds for the MCMC sampler. This might be handy, if you work with a degenerate Fisher matrix.
+ -lowerin: vector of length theodim that holds the lower bounds on the parameters
+ -upperin: as lowerin, just with the upper bounds **/
+void DaliPaint::SetBounds(vector<double> lowerin, vector<double> upperin)
+{
+
+    cout << "Setting boundaries of sampling domain." << endl;
+
+    if(lowerin.size() != theodim || upperin.size() != theodim)
+    {
+        cout << "You either forgot to specify some upper/lower boundaries, or you defined too many. Please repair. Abort()." << endl;
+        abort();
+    }
+
+    lowerbounds = lowerin;
+    upperbounds= upperin;
+    boundsgiven = 1;
+
+}
+
+
+
+double DaliPaint::LogLike(vector<double> peval)
+{
+
+    if(peval.size() != theodim)
+    {
+        cout << "DaliPaint::LogLike: Likelihood could not be evaluated, since the length of the given parameter vector does not match the number of theoretical parameters." << endl;
+        abort();
+    }
+
+    /*return zero outside boundaries*/
+    if(boundsgiven)
+    {
+        for(int i = 0; i < theodim; i++)
+        {
+            if(peval[i] < lowerbounds[i] || peval[i] > upperbounds[i])
+            {
+                return 1e20;   //return a really huge number, such that exp(-lnL) = 0
+            }
+        }
+    }
+
+
+
+
+
+    vector<double> ev (peval);
+    for(int i = 0; i < theodim; i++)
+    {
+        ev.at(i) -= fid.at(i);
+    }
+
+    /*calculate here the log likelihood with Sabg and Qabgd and the rest...*/
+    double lnL = 0;
+    double F = 0;
+    double S = 0;
+    double Q = 0;
+    double P = 0;
+    double H = 0;
+
+
+    for(int a = 0; a < theodim; a ++)
+    {
+        for(int b = 0; b < theodim; b ++)
+        {
+            F+=gsl_matrix_get(fisher,a,b)*ev[a]*ev[b];
+
+            for(int g = 0; g < theodim; g ++)
+            {
+
+                S += Sabg[a][b][g]*ev[a]*ev[b]*ev[g];
+
+                for(int d = 0; d < theodim; d ++)
+                {
+                    Q += Qabgd[a][b][g][d]*ev[a]*ev[b]*ev[g]*ev[d];
+
+                    if(derivorder == 3)
+                    {
+                        for(int e = 0; e < theodim; e++)
+                        {
+                            P += Pabgde[a][b][g][d][e]*ev[a]*ev[b]*ev[g]*ev[d]*ev[e];
+
+                            for(int f = 0; f < theodim; f++)
+                            {
+
+                                H+= Habgdef[a][b][g][d][e][f]*ev[a]*ev[b]*ev[g]*ev[d]*ev[e]*ev[f];
+                            }
+                        }
+
+                    }//derivorder ==3
+
+                }
+            }
+        }
+    }
+
+    //cout << F << " " << S << " " << Q << endl;
+    lnL = 0.5*F + S/6.0 + Q/24.0 + P/120.0 + H/720.0;
+    
+    //cout << "LnL: " << lnL << endl;
+    return lnL;
+}
+
+
+
+
+
+
+/**Virtual function - not a PURE virtual function. You can overwrite it, but you don't have to. It is the function which the MCMC sampler samples. If you don't overwrite it, DALI will sample the DALI-approximated likelihood. You may want to overwrite it, if you also want to sample the unapproximated likelihood.... but there are really much nicer MCMC samplers on the market to do so! If you don't overwrite this function, you can ignore it :)
+     - x: the vector in which your likelihood depends.**/
+double DaliPaint::ToBeSampled(vector<double> x)
+{
+    return exp(-LogLike(x));
+}
+
+
+/*computes a cholesky decomposition of the inverse fisher matrix. This can then be used in the Metropolis Hastings Sampler for the proposal distribution. It has not been well tested yet and might not be the 'standard' solution. Users are welcome to give feedback - so far, the use of this function was never really needed.*/
+void DaliPaint::PrepareCholesky()
+{
+  
+  if(!fisher_alloced)
+  {
+    gsl_matrix_set_identity(Cholesky);
+  }
+  
+  else
+  {
+    gsl_matrix* aux = gsl_matrix_alloc(theodim, theodim); 
+    gsl_matrix* inv_fish = gsl_matrix_alloc(theodim, theodim);
+    gsl_matrix_memcpy(aux,fisher);
+    
+    invmatrix(aux, theodim, inv_fish);
+    
+    gsl_linalg_cholesky_decomp (inv_fish);
+    
+    
+    for(int i = 0; i < theodim; i++)
+    {
+      for(int j = 0; j < theodim; j++)
+      {
+	if(j <= i)
+	{
+	  gsl_matrix_set(Cholesky, i, j, gsl_matrix_get(inv_fish, i, j));
+	}
+	else
+	  gsl_matrix_set(Cholesky, i, j, 0.0);
+	
+      }
+      
+     
+      
+      
+    }
+    
+     cout << "The Cholesky matrix: " << endl;
+    printmatrix(Cholesky, theodim, theodim);
+    
+     gsl_matrix_free(aux);
+     gsl_matrix_free(inv_fish);
+     Cholesky_jump = 1;
+  }
+     
+}
+
+
+
+/**A cute little MCMC-sampler (Metropolis Hastings). The sampler starts at the best fit if startx is set to be the fiducial point (recommended), and will therefore not have any burn in.
+ - repetitions: The number of samples that it will try. This is NOT the number of samples that is in the end accepted.
+ - sigmas: A vector of proposed variances along the parameter axes. This is taken as a diagonal proposal matrix for the sampler. Usually, you will set it to equal diagonal entries of the Fisher matrix (or its inverse...). If the Fisher matrix is singular, please specify some fraction of your prior range as proposal variance. Must have the same dimension as your number of parameters.
+ - startx: the starting point of the sampler. Must have the same dimension as your number of parameters.
+ - seed: an integer that seeds the random number generator. If two chains of the same length are run with the same seed, the chains will be identical.
+ **/
+void DaliPaint::sampling(int repetitions,vector<double> sigmas,vector<double> startx, int seed)
+{
+
+  
+    for(int i = 0; i < theodim; i++)
+    {
+        if(sigmas[i] < tiny)
+        {
+            cout << endl;
+            cout << "The variance of the proposal distribution is either zero or negative along one coordinate axis; cannot sample like this. Abort()." << endl;
+            cout << "Problematic Variance is entry " << i << " of the sigmas-vector: sigmas[" << i<<"]="<<sigmas[i] << endl;
+            cout << "Possible issue: Did you use the Fisher matrix for the proposal distribution? And is it singular? If so, replace it by guesses for the variances." << endl << endl;
+            abort();
+
+        }
+    }
+
+    cout << endl;
+    cout << "Starting to sample. Seed is " << seed << endl;
+    seed_p = seed; //store, since it will used as appendix for the chainfile
+    
+    
+    if(loaded_chain)
+    {
+     cout << "Warning: you write a chain to a file that contains the chain from another file. Make very sure you don't mix the different chains up. Else you might end up using one chain twice." << endl;
+    }
+    
+      
+    seedstr << seed_p;
+    seedstring = seedstr.str();
+   
+    ChainName    = outdir + (string)"/Seed" + seedstring + (string)".chain";
+    Chainout = fopen(ChainName.c_str(), "w");
+    
+    cout << "Writing Chain to file " << ChainName << endl;
+    
+
+    int accepted = 0;
+
+    r = gsl_rng_alloc (gsl_rng_default);
+    //setting seed such that different chains can be combined
+    gsl_rng_set (r, seed);
+
+    for(int reps = 0; reps < repetitions; reps++)
+    {
+        if(reps ==(int)(0.1*repetitions))
+            cout << "10% of sampling completed." << endl;
+
+        if(reps == (int)(0.25*repetitions))
+            cout << "25% of sampling completed" << endl;
+
+        if(reps == (int)(0.5*repetitions))
+            cout << "50% of sampling completed" << endl;
+
+        if(reps == (int)(0.75*repetitions))
+            cout << "75% of sampling completed." << endl;
+
+
+        //for the first sample, start at the position specified by user
+        if(!startflag)
+        {
+            plast = ToBeSampled(startx);
+            curx = startx;
+	    
+	    //rejected samples:
+	    lastx = startx;
+	    lastp = plast;
+	    
+            startflag = 1;
+        }
+
+        testx = curx;
+
+	if(Cholesky_jump)
+	{
+	  for(int m = 0; m < 1; m++)
+	  {
+          for(int i = 0; i < theodim; i++)
+          {
+           gsl_vector_set(draw, i, gsl_ran_gaussian (r, 1.0));
+          }
+       
+          gsl_blas_dgemv (CblasNoTrans, 1.0, Cholesky, draw, 0.0, jump);
+        
+	  
+	  //cout << "Choleskyjump: " << endl;
+	  for(int i = 0; i < theodim; i++)
+	  {
+	    /*here is the reason why using the Cholesky decomposition has not been well tested:
+	     obviously, the likelihood will be usually non-Gaussian - that is the reason why we run this code. So it is pretty much problem-dependent which prefactor to choose here instead of the 0.005, and whether this helps at all. Using the Hamiltonian Monte Carlo Sampler is much more efficient - it will be included in a never version of the code.*/
+	    testx.at(i) += 0.005*gsl_vector_get(jump,i);
+	    //cout << gsl_vector_get(jump,i) << " " ;
+	  }
+        //cout << endl;
+	
+	
+	  }
+	}
+	
+	else
+	{
+	 for(int i = 0; i < theodim; i++)
+	  {
+	   testx.at(i) += gsl_ran_gaussian (r, sigmas[i]);
+	  }
+	}
+        
+        pcurrent = ToBeSampled(testx);
+        pratio = pcurrent/plast;
+
+        if(pratio < 0.0)
+        {
+            cout << "Fatal: encountered negativ probabilities. Abort()" << endl;
+            abort();
+        }
+
+        double Acc_Prob = min(1.0, pratio);
+
+        if(Acc_Prob >= 1.0-tiny)
+        {
+            Accept();
+            accepted++;
+	        
+	    
+        }
+
+        else
+        {
+            double some_prob = gsl_rng_uniform(r);
+
+            if(some_prob < pratio)
+            {
+                Accept();
+                accepted++;
+							
+            }
+            
+            else
+	    {
+	      Reject();
+	    }
+        }
+
+
+    }//reps_loop
+
+    fclose(Chainout);
+    cout << "Sampling completed. Acceptance ratio: " << (double)accepted/(double)repetitions << endl;
+    gsl_rng_free (r);
+}
+
+
+
+void DaliPaint::Reject()
+{
+  chain.push_back(lastx);
+  chain_y.push_back(lastp);
+  
+}
+
+void DaliPaint::Accept()
+{   /*If a sample is accepted, attach the sample to the chain,
+      and update the position of the sampler*/
+    chain.push_back(testx);
+    chain_y.push_back(pcurrent);
+    
+    /*store, in case the next sample gets rejected*/
+    lastx = testx;
+    lastp = pcurrent;
+
+    plast = pcurrent;
+    curx = testx;
+
+
+    /*keep track of how widely the chain scatters through the parameter space
+     This is later needed for plotting/marginalizing*/
+    for(int i = 0; i < theodim; i++)
+    {
+        if(testx[i] < minx[i])
+            minx[i] = testx[i];
+
+        if(testx[i] > maxx[i])
+            maxx[i] = testx[i];
+    }
+    
+    
+    //Write Chain to file
+    for(int i = 0; i < testx.size(); i++)
+    {
+       fprintf(Chainout, " %.12e", testx[i]);
+    }
+    fprintf(Chainout, " %.12e\n",pcurrent);
+
+    flush++;
+    //cout << "Flush is: " << flush << endl;
+    if(flush == 20)
+    {
+      fflush(Chainout);
+      flush = 0;
+    }
+
+    
+
+}
+
+
+
+
+
+/**Prints the Chain to the screen. Use for debugging only.**/
+void DaliPaint::print_chain()
+{
+
+    for(int i = 0; i < chain.size(); i++)
+    {
+        for(int j = 0; j < chain[0].size(); j++)
+        {
+            cout << chain[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+}
+
+
+void DaliPaint::best_fit()
+{
+
+    vector<double> pdf(chain_y);
+
+    sort(pdf.begin(), pdf.end());
+
+    cout << pdf[0] << " " << pdf.at(pdf.size()-1) << endl;
+
+}
+
+
+
+/*Has been moved into the sampler itself*/
+/*Writes the MCMC chain to a file in the outdir. You can NOT simply combine different MCMC chains, as you would often do with Monte Python: You can only do this, if you have run each Chain with a different random seed. Else, the two chains will be identical.*/
+
+/*
+void DaliPaint::WriteChainToFile()
+{    
+    if(loaded_chain)
+    {
+     cout << "Warning: you write a chain to a file that contains the chain from another file. Make very sure you don't mix the different chains up. Else you might end up using one chain twice." << endl;
+    }
+    
+    stringstream seed;  
+    seed << seed_p;
+    string seedstring = seed.str();
+   
+    string ChainName    = outdir + (string)"/MCMC_chain" + seedstring;
+    FILE* Chainout = fopen(ChainName.c_str(), "w");
+    
+    cout << "Writing Chain to file " << ChainName << endl;
+
+    for(int z = 0; z < chain.size(); z++)
+    {
+
+        for(int i = 0; i < chain[0].size(); i++)
+        {
+            fprintf(Chainout, " %.4e", chain[z][i]);
+        }
+        fprintf(Chainout, " %.12e",chain_y[z]);
+	
+        fprintf(Chainout,"\n");
+    }
+
+    fclose(Chainout);
+}
+
+*/
+
+/**Loads an MCMC chain from the file specified by filename.**/
+void DaliPaint::LoadChainFromFile(string filename)
+{
+  
+  
+    if(!chain.empty())
+    {
+        cout << "Concatenate new chain with an already existing chain. Make sure the seeds of the chains were different!" << endl;
+    }
+
+
+    ifstream LeseDatei (filename.c_str());
+
+    if(!LeseDatei)
+    {
+        cout << "Dali-Readin: Input File for MCMC chain not found." << endl;
+        abort();
+    }
+
+
+    while(LeseDatei)
+    {
+        vector<double> oneline;
+        oneline.resize(theodim);
+
+        for(int i = 0; i < theodim; i++)
+        {
+	    //storing the coordinates 
+            double a;
+            LeseDatei >> a;
+            oneline[i] = a;
+
+        }
+        chain.push_back(oneline);
+        
+        //stroing the probability at the coordinates
+        double y;
+        LeseDatei >> y;
+        chain_y.push_back(y);
+	
+
+    }
+
+    //There is always some annoying repetition of the last number that was read in
+    //So let's pop back the last Chain sample: if it really is a good MCMC chain, it will not
+    //care about being one sample less long
+    chain.pop_back();
+    chain_y.pop_back();
+    
+    LeseDatei.close();
+
+
+    /*Track the scattering of the chain, need this for plotting*/
+    for(int z = 0; z < chain.size(); z++)
+    {
+        for(int i = 0; i < theodim; i++)
+        {
+
+            if(chain[z][i] < minx[i])
+                minx[i] = chain[z][i];
+
+            if(chain[z][i] > maxx[i])
+                maxx[i] = chain[z][i];
+
+        }
+    }
+
+  //flag
+  loaded_chain =1;
+  flush = 0;
+
+}
+
+
+
+
+
+/*This function takes a Fisher matrix and makes plots of all the possible marginalizations*/
+void DaliPaint::FisherMargins(gsl_matrix* fisherin, int dim, double binwidth, int ex)
+{
+    if(!boundsgiven)
+    {
+        cout << "Bounds of the plotting domain must be given. Abort" << endl;
+        abort();
+    }
+
+
+    gsl_matrix* invfish = gsl_matrix_calloc(dim, dim);
+
+    /*stores the inverted Fisher matrix in invfish*/
+    invmatrix(fisherin, dim, invfish);
+
+    for(int i = 0; i < dim; i++)
+    {
+        for(int j = i+1; j < dim; j++)
+        {
+            gsl_matrix* marge = gsl_matrix_calloc(2,2);
+
+            //this extracts the 2 by 2 submatrix from invfish and stores it in marge
+            retSubFish(i,j,dim,invfish,marge);
+
+            /*If one of the 2 by 2 submatrices is singular, the code would abort. This is annoying if one wants to plot many many matrices -> catch the error and break loop before inversion of the 2by2 matrix is done. */
+            double det = determinant(marge,2);
+            if(fabs(det) < 1e-10)
+            {
+                cout << "WARNING: The inverse 2by2Fisher matrix " << i << j <<" is singular. Skipping this for plotting. If you want to plot the paralell lines, use exp(-1/2 2by2-Fisher) on a grid." << endl;
+                break;
+            }
+
+            /*now we need to invert back*/
+            gsl_matrix* marge_invback = gsl_matrix_calloc(2,2);
+
+            /*mage_invback is the two-dimensional Fisher matrix, with the other params being marginalized*/
+            invmatrix(marge,2, marge_invback);
+            //printmatrix(marge_invback,2,2);
+            /*now we prepare the plot files*/
+
+            stringstream I;
+            stringstream J;
+            I << i;
+            J << j;
+            string Istring = I.str();
+            string Jstring = J.str();
+
+            string Datafile = outdir.c_str() + (string)"/" +(string)"Fish" + Istring + Jstring;
+            cout << "Preparing Datafile " << Datafile << endl;
+            string PythonName = Datafile.c_str() +(string)".py";
+
+            FILE * Data;
+            Data = fopen(Datafile.c_str(), "w");
+
+
+            double deltax = fabs(upperbounds[i]-lowerbounds[i])*binwidth; //pixle width in x-direction
+            double deltay = fabs(upperbounds[j]-lowerbounds[j])*binwidth; //pixle width in y-direction
+
+            vector<double> prob;
+
+            int pixels = (int)(1./binwidth);
+
+
+            for(int x = 0; x < pixels; x++)
+            {
+                double xpos = lowerbounds[i] + x*deltax;
+                for(int y = 0; y < pixels; y++)
+                {
+                    double ypos = lowerbounds[j] + y*deltay;
+                    gsl_vector* deltap = gsl_vector_alloc(2);
+                    gsl_vector_set(deltap,0,fid[i]-xpos);
+                    gsl_vector_set(deltap,1,fid[j]-ypos);
+                    // cout << fid[i]-xpos << " " << fid[j]-ypos << endl;
+
+                    double hilf = vec1Matvec2(deltap, marge_invback, deltap, 2);
+
+                    /*plot the likelihood*/
+                    prob.push_back(exp(-0.5*hilf));
+                    fprintf(Data, "%.3f %.3f %.2e\n",xpos,ypos,exp(-0.5*hilf));
+
+                    gsl_vector_free(deltap);
+                }
+
+            }
+
+            fclose(Data);
+
+
+            /*free the memory of this loop*/
+            gsl_matrix_free(marge);
+            gsl_matrix_free(marge_invback);
+
+
+
+            if(paramnames.empty())
+            {
+                pythoncontours_w(prob,pixels,pixels,
+                               PythonName,Datafile,"","");
+            }
+
+            if(!paramnames.empty())
+            {
+                pythoncontours_w(prob,pixels,pixels,
+                               PythonName,Datafile,paramnames[i].c_str(),paramnames[j].c_str());
+
+            }
+
+            if(ex)
+            {
+                string command = (string)"python " + PythonName;
+                system(command.c_str() );
+            }
+
+        }
+    }
+
+
+}
+
+
+
+
+
+/**Makes a plot of the approximated likelihood on a grid. Currently, this is only possible, if you use theodim ==2. The resulting plot is more smooth that the MCMC-generated plot, but else the code does intrinsically use the same likelihood approximation.
+ -outname: Name for the plot
+ -binwidth: some double between 0 and 1. It sets the gridspacing in percent of the prior range. Typical values will be in the low percent level, like 0.03 or 0.001**/
+void DaliPaint::gridevaluation(string outname,double binwidth)
+{
+    if(!boundsgiven || theodim > 2)
+    {
+        cout << "Can evaluate only a 2d-Grid, and bounds must be given. Abort" << endl;
+        abort();
+    }
+    if(binwidth > 0.5)
+    {
+        cout << "You requested a binwidth of half the plot-extent. I.e. you'll have two bins in the plots. This will not be a plot, it will be.... something of artistical value. Maybe. Please take a binwidth of something in the lower percent-regime, like 0.03, or 0.01 for many samples." << endl;
+    }
+
+
+    string Datafile = outdir.c_str() + (string)"/" + outname.c_str()+(string)"Grid";
+    string PythonName = Datafile.c_str() +(string)".py";
+
+    FILE * Data;
+    Data = fopen(Datafile.c_str(), "w");
+
+
+
+    double deltax = fabs(upperbounds[0]-lowerbounds[0])*binwidth;
+    double deltay = fabs(upperbounds[1]-lowerbounds[1])*binwidth;
+    int xcount = 0;
+    int ycount = 0;
+    vector<double> prob;
+
+    for(double x = lowerbounds[0]; x < upperbounds[0]-deltax; x+= deltax)
+    {
+        xcount++;
+
+        for(double y = lowerbounds[1]; y < upperbounds[1]-deltay; y+= deltay)
+        {
+            if(xcount == 1) {
+                ycount++;
+            }
+
+            vector<double> xeval;
+            xeval.resize(2);
+            xeval[0] = x;
+            xeval[1] = y;
+
+            double likeli = ToBeSampled(xeval);
+
+            fprintf(Data, " %.5e %.5e %.5e\n",
+                    x,y,likeli);
+            prob.push_back(likeli);
+        }
+
+    }
+
+
+
+    fclose(Data);
+
+    if(xcount == 0 || ycount == 0)
+    {
+        cout << "WARNING: No grid of the sampled likelihood (or posterior) was created." << endl << "A subsequent python execution will probably fail and complain about the grid." << endl << "Possible issues:" << endl << "-did you create an MCMC chain? You can test this with the function print_chain()" << endl;
+    }
+
+    if(xcount != ycount)
+    {
+        cout << "WARNING: Python will probably crash, because the grid is not square." << endl;
+    }
+
+
+
+    if(paramnames.empty())
+    {
+        pythoncontours(prob,xcount,ycount,
+                       PythonName,Datafile,"","");
+    }
+
+    if(!paramnames.empty())
+    {
+        pythoncontours(prob,xcount,ycount,
+                       PythonName,Datafile,paramnames[0].c_str(),paramnames[1].c_str());
+
+    }
+
+
+
+}
+
+
+/**Marginalizes the MCMC chain and creates a python file and a data file. From these, a plot can be generated. The function also creates a gnuplot file, such that the user can rotate the plot in three dimensions. This is handy if the confidence contours look strange and one doesn't know why. Uses the GSL for 2d-histogramming.
+ -p1 and p2: the two parameters on the axes of your 2d-plot. All other parameters will be marginalized out.
+ -outname: a name four your data file and the python executable
+ -binwidth: some double between 0 and 1. Specifies the width of a bin, in percent of the plotting range. If set too large, no small scale structure will be seen in the plot. If set too low, the plot will look like a dissolving fizzy tablet. 0.03 is a good guess. **/
+void DaliPaint::marginDown(int p1, int p2, string outname, double binwidth)
+{
+
+    if(binwidth > 0.5)
+    {
+        cout << "You requested a binwidth of half the plot-extent. I.e. you'll have two bins in the plots. This will not be a plot, it will be.... something of artistical value. Maybe. Please take a binwidth of something in the lower percent-regime, like 0.03, or 0.01 for many samples." << endl;
+    }
+
+
+    stringstream P1;
+    stringstream P2;
+    P1 << p1;
+    P2 << p2;
+    string P1string = P1.str();
+    string P2string = P2.str();
+
+    string MarginName = outdir.c_str() + (string)"/" + outname.c_str() + P1string + P2string;
+    string PythonName = MarginName.c_str() +(string)".py";
+
+    cout << "MarginName: " << MarginName << " Pythonname: " << PythonName << endl;
+
+    cout << endl;
+    cout << "Marginalizing chain, creating python executable " << PythonName << ". This can take some time..........." << endl;
+
+    FILE * marginfile;
+    marginfile = fopen(MarginName.c_str(), "w");
+
+    FILE * gnupfile;
+
+    string gnupl = outdir + (string)"/Gnuplotfile" + P1string +P2string;
+    gnupfile = fopen(gnupl.c_str(),"w");
+
+
+    /*The bin size does of course affect the "normalization" i.e. the height of the resulting 2dim likelihood. That's why the function "confidencecontours" appears at the end. It calculates where the confidence contours must be placed.*/
+
+    double deltax = fabs(maxx[p1]-minx[p1])*binwidth; //width of 1 x-direction pixel
+    double deltay = fabs(maxx[p2]-minx[p2])*binwidth; //width of 1 y-direction pixel
+
+    if(deltax < 1e-14 || deltay < 1e-14)
+    {
+        cout << "WARNING: There is no resolvable extent of the plot along one of the chosen axis. Abort." << endl;
+        abort();
+    }
+
+    vector<double> prob;
+
+    int pixels = (int)(1./binwidth);
+
+
+
+    gsl_histogram2d* his= gsl_histogram2d_alloc(pixels,pixels);
+    gsl_histogram2d_set_ranges_uniform(his,minx[p1],maxx[p1],minx[p2],maxx[p2]);
+
+    /*run through the chain to search which samples fall into which pixels*/
+    for(int z = 0; z < chain.size(); z++)
+    {
+        gsl_histogram2d_increment(his, chain[z][p1], chain[z][p2]);
+    }
+
+
+    for(int i = 0; i < pixels; i++)
+    {
+        for(int j = 0; j < pixels; j++)
+        {
+
+            /*How many samples does the current pixel have*/
+            int pixval = (int)gsl_histogram2d_get(his,i,j);
+
+            /*Assign the counted samples to the center of the pixels*/
+            double xcenter = minx[p1] +((double)i + 0.5)*deltax;
+            double ycenter = minx[p2] +((double)j + 0.5)*deltay;
+
+            //python data file and gnuplot data file
+            fprintf(marginfile, " %.5e %.5e %d\n",xcenter,ycenter,pixval);
+            fprintf(gnupfile, " %.5e %.5e %d\n", xcenter,ycenter,pixval);
+            prob.push_back(pixval);
+        }
+
+        fprintf(gnupfile, "\n"); //gnuplot needs this fancy format
+    }
+
+
+    gsl_histogram2d_free(his);
+
+
+
+    fclose(marginfile);
+    fclose(gnupfile);
+
+    if(pixels == 0 )
+    {
+        cout << "WARNING: No grid of the sampled likelihood (or posterior) was created." << endl << "A subsequent python execution will probably fail and complain about the grid." << endl << "Possible issues:" << endl << "-did you create an MCMC chain? You can test this with the function print_chain()" << endl;
+    }
+
+    if(paramnames.empty())
+    {
+        pythoncontours(prob,pixels,pixels,
+                       PythonName,MarginName,P1string,P2string);
+    }
+
+    if(!paramnames.empty())
+    {
+        pythoncontours(prob,pixels,pixels,
+                       PythonName,MarginName,paramnames[p1].c_str(),paramnames[p2].c_str());
+
+    }
+
+
+    cout << "................................................marginalization completed." << endl;
+
+}
+
+
+
+/**Adds the provided fisher matrix fisher_in to the fisher matrix of the DaliPaint object. The matrices must have the same dimension, and the rows and columns of both matrices must represent the same parameters.**/
+void DaliPaint::AddFishers(gsl_matrix* fisher_in)
+{
+
+    if(!fisher_alloced)
+    {
+        fisher = gsl_matrix_alloc(theodim, theodim);
+    }
+
+    gsl_matrix_add(fisher, fisher_in);
+
+}
+
+
+/**Adds Sabg-tensors of different experiments.**/
+void DaliPaint::AddSabgs(flex Sabg_in)
+{
+    if(Sabg_in[0].size() != Sabg[0].size())
+    {
+        cout << "You must provide a tensor Sabg_in that has the same dimensions as the number of parameters that your DaliPaint Object uses. This object uses " << theodim << "."<< endl;
+        abort();
+    }
+
+    for(int i = 0; i < theodim; i++)
+    {
+        for(int j = 0; j < theodim; j++)
+        {
+            for(int k = 0; k < theodim; k++)
+            {
+                Sabg[i][j][k]+=Sabg_in[i][j][k];
+            }
+        }
+    }
+
+
+}
+
+
+/**Adds Qabgd-tensors of different experiments.**/
+void DaliPaint::AddQabgds(quarx Qabgd_in)
+{
+    if(Qabgd_in[0].size() != Qabgd[0].size())
+    {
+        cout << "You must provide a tensor Qabgd_in that has the same dimensions as the number of parameters that your DaliPaint Object uses. This object uses " << theodim << "." << endl;
+        abort();
+    }
+
+    for(int i = 0; i < theodim; i++)
+    {
+        for(int j = 0; j < theodim; j++)
+        {
+            for(int k = 0; k < theodim; k++)
+            {
+                for(int l = 0; l < theodim; l++)
+                {
+                    Qabgd[i][j][k][l]+=Qabgd_in[i][j][k][l];
+                }
+            }
+        }
+    }
+
+
+}
+
+
+/**Adds Pabgde-tensors of different experiments.**/
+void DaliPaint::AddPabgdes(pent Pabgde_in)
+{
+    if(Pabgde_in[0].size() != Pabgde[0].size())
+    {
+        cout << "You must provide a tensor Pabgde_in that has the same dimensions as the number of parameters that your DaliPaint Object uses. This object uses " << theodim << "." << endl;
+        abort();
+    }
+
+    for(int i = 0; i < theodim; i++)
+    {
+        for(int j = 0; j < theodim; j++)
+        {
+            for(int k = 0; k < theodim; k++)
+            {
+                for(int l = 0; l < theodim; l++)
+                {
+                    for(int m = 0; m < theodim; m++)
+                    {
+                        Pabgde[i][j][k][l][m]+=Pabgde_in[i][j][k][l][m];
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+
+/**Adds Habgdef-tensors of different experiments.**/
+void DaliPaint::AddHabgdefs(hex Habgdef_in)
+{
+    if(Habgdef_in[0].size() != Habgdef[0].size())
+    {
+        cout << "You must provide a tensor Habgdef_in that has the same dimensions as the number of parameters that your DaliPaint Object uses. This object uses " << theodim << "." << endl;
+        abort();
+    }
+
+    for(int i = 0; i < theodim; i++)
+    {
+        for(int j = 0; j < theodim; j++)
+        {
+            for(int k = 0; k < theodim; k++)
+            {
+                for(int l = 0; l < theodim; l++)
+                {
+                    for(int m = 0; m < theodim; m++)
+                    {
+                        for(int n = 0; n < theodim; n++)
+                        {
+                            Habgdef[i][j][k][l][m][n]+=Habgdef_in[i][j][k][l][m][n];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

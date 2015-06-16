@@ -1,0 +1,152 @@
+\hypertarget{classDaliGen}{\section{Dali\-Gen Class Reference}
+\label{classDaliGen}\index{Dali\-Gen@{Dali\-Gen}}
+}
+Inheritance diagram for Dali\-Gen\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classDaliGen}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliGen_a2c740d6c4e6022d602757a84a41784cd}{typedef double(Dali\-Gen\-::$\ast$ {\bfseries matrixfiller} )(vector$<$ double $>$ eval, int i, int j)}\label{classDaliGen_a2c740d6c4e6022d602757a84a41784cd}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDaliGen_a0bba3e7de4d7362c28047cf7f4cb41ec}{Dali\-Gen} (int theo, int indep, int noof, vector$<$ double $>$ fidin, int derivorder\-\_\-in, string outdir\-\_\-in)
+\item 
+\hypertarget{classDaliGen_adc1822fa12310cc961f616b9a861963e}{double {\bfseries sec\-One\-Mat} (matrixfiller p, vector$<$ double $>$ eval, int par, int i, int j, double step=2e-\/2)}\label{classDaliGen_adc1822fa12310cc961f616b9a861963e}
+
+\item 
+\hypertarget{classDaliGen_a66103dcbc54e36a98f4fdc39bb206f5a}{void {\bfseries D\-Matrix} (matrixfiller p, vector$<$ double $>$ eval, int par, int matrixdim, gsl\-\_\-matrix $\ast$result, double step=0.\-01)}\label{classDaliGen_a66103dcbc54e36a98f4fdc39bb206f5a}
+
+\item 
+\hypertarget{classDaliGen_a34beadec0b421cfaaeb37f9fc92a730d}{double {\bfseries sec\-One\-Mat} (matrixfiller p, vector$<$ double $>$ eval, int par, int matrixdim, gsl\-\_\-matrix $\ast$result, double step=0.\-01)}\label{classDaliGen_a34beadec0b421cfaaeb37f9fc92a730d}
+
+\item 
+\hypertarget{classDaliGen_a6ff2c1a3cdd2a953c6207f04b5379646}{void {\bfseries D\-D\-Matrix} (matrixfiller p, vector$<$ double $>$ eval, int par1, int par2, int matrixdim, gsl\-\_\-matrix $\ast$result, double step=0.\-01)}\label{classDaliGen_a6ff2c1a3cdd2a953c6207f04b5379646}
+
+\item 
+\hypertarget{classDaliGen_a63b4d29fc5c02ef5cad74e96c318cdf2}{void {\bfseries D\-D\-D\-Matrix} (matrixfiller p, vector$<$ double $>$ eval, int par1, int par2, int par3, int matrixdim, gsl\-\_\-matrix $\ast$result, double step=0.\-01)}\label{classDaliGen_a63b4d29fc5c02ef5cad74e96c318cdf2}
+
+\item 
+void \hyperlink{classDaliGen_a9ad9ceddbb0b7d156c7eeeda08a0fc32}{Set\-Steps\-\_\-\-Cov} (double f\-\_\-step\-\_\-\-C, double d\-\_\-step\-\_\-\-C, double t\-\_\-step\-\_\-\-C)
+\item 
+\hypertarget{classDaliGen_ae4ac3d0ff453bc1e8dc7932284f1e745}{void {\bfseries Calc\-\_\-\-D\-Cs} ()}\label{classDaliGen_ae4ac3d0ff453bc1e8dc7932284f1e745}
+
+\item 
+\hypertarget{classDaliGen_ae72c88dd2c32b17f052423e97cfddf12}{void {\bfseries Calc\-\_\-\-D\-D\-Cs} ()}\label{classDaliGen_ae72c88dd2c32b17f052423e97cfddf12}
+
+\item 
+\hypertarget{classDaliGen_a50fe1b2e0aa35d09b8c4e4b9481afc41}{void {\bfseries Calc\-\_\-\-D\-D\-D\-Cs} ()}\label{classDaliGen_a50fe1b2e0aa35d09b8c4e4b9481afc41}
+
+\item 
+\hypertarget{classDaliGen_a2560914669d9b8d6dce111e15de84e9b}{void {\bfseries Fill\-Ctwiddle} ()}\label{classDaliGen_a2560914669d9b8d6dce111e15de84e9b}
+
+\item 
+\hypertarget{classDaliGen_af8e6bab9599a2f69cfdcfd1fe7e56c9c}{void {\bfseries Double\-Twiddle} ()}\label{classDaliGen_af8e6bab9599a2f69cfdcfd1fe7e56c9c}
+
+\item 
+void \hyperlink{classDaliGen_a43f374299add9948a7853c7d0427cbe9}{Calc\-Fisher} ()
+\item 
+void \hyperlink{classDaliGen_ace06507c0cf05995ea4b07fddc195835}{Calc\-\_\-\-Beyond\-Fish} ()
+\item 
+void \hyperlink{classDaliGen_a598555d704eb5387c11e26e0785637c7}{Free} ()
+\item 
+void \hyperlink{classDaliGen_a4b3d983bea7db5c7ba634fd3e96864ed}{Low\-Memory} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliGen_a69f098a299de5d0d018cf8edcdd2d4d2}{vector$<$ gsl\-\_\-matrix $\ast$ $>$ {\bfseries D\-Cov}}\label{classDaliGen_a69f098a299de5d0d018cf8edcdd2d4d2}
+
+\item 
+\hypertarget{classDaliGen_af205ad401e1df65def06d7d0f0b149e9}{vector$<$ vector$<$ gsl\-\_\-matrix $\ast$ $>$ $>$ {\bfseries D\-D\-Cov}}\label{classDaliGen_af205ad401e1df65def06d7d0f0b149e9}
+
+\item 
+\hypertarget{classDaliGen_aa4df079f30dc2365ca1c197bb32f46e7}{vector$<$ vector$<$ vector\\*
+$<$ gsl\-\_\-matrix $\ast$ $>$ $>$ $>$ {\bfseries D\-D\-D\-Cov}}\label{classDaliGen_aa4df079f30dc2365ca1c197bb32f46e7}
+
+\item 
+\hypertarget{classDaliGen_a69bb99704cd878a9309adee522466e78}{vector$<$ gsl\-\_\-matrix $\ast$ $>$ {\bfseries Ctwiddle}}\label{classDaliGen_a69bb99704cd878a9309adee522466e78}
+
+\item 
+\hypertarget{classDaliGen_acbaa76829d7cf685291b1e67579883f2}{vector$<$ vector$<$ gsl\-\_\-matrix $\ast$ $>$ $>$ {\bfseries C\-Doubletwiddle}}\label{classDaliGen_acbaa76829d7cf685291b1e67579883f2}
+
+\item 
+\hypertarget{classDaliGen_abdff7f7f88cb0f00127e11e1b2ec9ba7}{vector$<$ vector$<$ vector\\*
+$<$ gsl\-\_\-matrix $\ast$ $>$ $>$ $>$ {\bfseries C\-Tripletwiddle}}\label{classDaliGen_abdff7f7f88cb0f00127e11e1b2ec9ba7}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classDaliGen_a0bba3e7de4d7362c28047cf7f4cb41ec}{\index{Dali\-Gen@{Dali\-Gen}!Dali\-Gen@{Dali\-Gen}}
+\index{Dali\-Gen@{Dali\-Gen}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Dali\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}Dali\-Gen\-::\-Dali\-Gen (
+\begin{DoxyParamCaption}
+\item[{int}]{theo, }
+\item[{int}]{indep, }
+\item[{int}]{noof, }
+\item[{vector$<$ double $>$}]{fidin, }
+\item[{int}]{derivorder\-\_\-in, }
+\item[{string}]{outdir\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_a0bba3e7de4d7362c28047cf7f4cb41ec}
+Constructor of a general dali object. The vectors which hold your parameters, the covariance matrix and its derivatives are allocated. Boolean flags are set to zero, indicating that nothing has been calculated yet. This constructor needs to be given the following parameters\-:
+\begin{DoxyItemize}
+\item int theo\-: the number of theoretical parameters, i.\-e. the dimensionality of your likelihood in parameter space
+\item int indep\-: the number of independent variables, that your data depend on. So basically everything that is not a theoretical parameter but still goes into the data. In cosmology this could be e.\-g. the redshift or the mass of some object. indep can be larger than 1, if your data depend on more than one independent variable, for example on time A\-N\-D temperature, as in case of the fishes that are described in the manual.
+\item int noof\-: the number of data points in your data set
+\item vector $<$double$>$ fidin\-: a vector of length theo, that contains the values of your fiducial parameters. The order of the parameters must be kept the same throughout the code! So please remember which parameter you store at position fidin\mbox{[}i\mbox{]}.
+\item int derivorder\-: if set to one D\-A\-L\-I will calculate third derivatives, if zero, D\-A\-L\-I will stop at second order derivatives
+\item string outdir\-\_\-in\-: tells the code where to store its results. If the folder outdir\-\_\-in does not exist, D\-A\-L\-I will create it. If it exists, it will not be overwritten. 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\hypertarget{classDaliGen_ace06507c0cf05995ea4b07fddc195835}{\index{Dali\-Gen@{Dali\-Gen}!Calc\-\_\-\-Beyond\-Fish@{Calc\-\_\-\-Beyond\-Fish}}
+\index{Calc\-\_\-\-Beyond\-Fish@{Calc\-\_\-\-Beyond\-Fish}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Calc\-\_\-\-Beyond\-Fish}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Gen\-::\-Calc\-\_\-\-Beyond\-Fish (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_ace06507c0cf05995ea4b07fddc195835}
+Calculates the higher order Dali-\/\-Tensors that approximate the likelihood beyond what the fisher matrix can do. It checks whether everything has been calculated that is needed. If not, it will do so. The resulting Dali tensors are stored in Dali\-Gen\-\_\-object.\-Sabg, Dali\-Gen\-\_\-object.\-Qabgd, Dali\-Gen\-\_\-object.\-Pabgde, Dali\-Gen\-\_\-object.\-Habgdef, where Dali\-Gen\-\_\-object is the name of the object that you created in your main() A\-T\-T\-E\-N\-T\-I\-O\-N\-: depending on whether you requested second or third order derivatives for your model and/or your likelihood, the tensor Qabgd will change, depending on the number of derivatives. \hypertarget{classDaliGen_a43f374299add9948a7853c7d0427cbe9}{\index{Dali\-Gen@{Dali\-Gen}!Calc\-Fisher@{Calc\-Fisher}}
+\index{Calc\-Fisher@{Calc\-Fisher}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Calc\-Fisher}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Gen\-::\-Calc\-Fisher (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_a43f374299add9948a7853c7d0427cbe9}
+Calculates the Fisher matrix and stores it in the gsl\-\_\-matrix$\ast$ Dali\-Gen\-\_\-object.\-fisher . The code will automatically check whether everything has been computed that it needs for the fisher matrix. If not, it will do so. If the Fisher matrix is singular, it doesn't matter much for the D\-A\-L\-I contours of the likelihood. The code will however warn you that you shall not use the fisher matrix as a proposal distribution for the M\-C\-M\-C sampler. \hypertarget{classDaliGen_a598555d704eb5387c11e26e0785637c7}{\index{Dali\-Gen@{Dali\-Gen}!Free@{Free}}
+\index{Free@{Free}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Free}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Gen\-::\-Free (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_a598555d704eb5387c11e26e0785637c7}
+Frees the memory associated with the pointers in the \hyperlink{classDaliGen}{Dali\-Gen} class. \hypertarget{classDaliGen_a4b3d983bea7db5c7ba634fd3e96864ed}{\index{Dali\-Gen@{Dali\-Gen}!Low\-Memory@{Low\-Memory}}
+\index{Low\-Memory@{Low\-Memory}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Low\-Memory}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Gen\-::\-Low\-Memory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_a4b3d983bea7db5c7ba634fd3e96864ed}
+If this function is called before the Dali\-Tensors are calculated, then the code will not keep the derivatives of the covariance matrix in memory. The derivative matrices then cannot be plotted. The Dali\-Tensors can still be calculated (because the code uses the Ctwiddles for that.) \hypertarget{classDaliGen_a9ad9ceddbb0b7d156c7eeeda08a0fc32}{\index{Dali\-Gen@{Dali\-Gen}!Set\-Steps\-\_\-\-Cov@{Set\-Steps\-\_\-\-Cov}}
+\index{Set\-Steps\-\_\-\-Cov@{Set\-Steps\-\_\-\-Cov}!DaliGen@{Dali\-Gen}}
+\subsubsection[{Set\-Steps\-\_\-\-Cov}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Gen\-::\-Set\-Steps\-\_\-\-Cov (
+\begin{DoxyParamCaption}
+\item[{double}]{f\-\_\-step\-\_\-\-C, }
+\item[{double}]{d\-\_\-step\-\_\-\-C, }
+\item[{double}]{t\-\_\-step\-\_\-\-C}
+\end{DoxyParamCaption}
+)}}\label{classDaliGen_a9ad9ceddbb0b7d156c7eeeda08a0fc32}
+Allows the user to set the step widths of the finite difference steps when taking derivatives of the covariance matrix. A similar function exists for the derivatives of the physical model. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Dali\-Gen.\-h\item 
+Dali\-Gen.\-cpp\end{DoxyCompactItemize}

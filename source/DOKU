@@ -1,0 +1,11 @@
+Since Last Publication (24th Feb), the following things were done:
+
+- included a flag is_diag for the covariance matrix inversion 
+- allow concatenating of chains in "LoadChain"
+-included a function lowmemory, because for huge covariance matrices 8 GB might not be enough because of all the derivatives...
+
+-included pythonconours_w and used that in FisherMargins: Fisher ellipses will now be grey
+
+-preparing for better control of derivatives: included vectors M_step, M_dstep, M_tstep
+
+- speed up second deriv-calculation: Using existing covmatrix, instead of recalculating it

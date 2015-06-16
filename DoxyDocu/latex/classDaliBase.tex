@@ -1,0 +1,340 @@
+\hypertarget{classDaliBase}{\section{Dali\-Base Class Reference}
+\label{classDaliBase}\index{Dali\-Base@{Dali\-Base}}
+}
+Inheritance diagram for Dali\-Base\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classDaliBase}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliBase_ad587f8c3da29a7e58727872d2a27eeb3}{typedef double(Dali\-Base\-::$\ast$ {\bfseries Mem\-Fun\-Point} )(vector$<$ double $>$ x)}\label{classDaliBase_ad587f8c3da29a7e58727872d2a27eeb3}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDaliBase_a7ea85e708de3877d9a771d93ea76d617}{Dali\-Base} (int theo, int indep, int noof, vector$<$ double $>$ fidin, string outdir\-\_\-in)
+\item 
+void \hyperlink{classDaliBase_af6a34db604769e09853e8300dc17fd7c}{Base\-Free} ()
+\item 
+\hypertarget{classDaliBase_a07d372be1ae30d25a7fd5444042585c4}{double {\bfseries first} (Mem\-Fun\-Point p, vector$<$ double $>$ eval, int par, double step=1e-\/3)}\label{classDaliBase_a07d372be1ae30d25a7fd5444042585c4}
+
+\item 
+\hypertarget{classDaliBase_a546624effef5b36ffc555ad13de1709b}{double {\bfseries sec\-One} (Mem\-Fun\-Point p, vector$<$ double $>$ eval, int par, double step=1e-\/2)}\label{classDaliBase_a546624effef5b36ffc555ad13de1709b}
+
+\item 
+\hypertarget{classDaliBase_a23a77b29f9d2d66f01327220ed1a9440}{double {\bfseries second} (Mem\-Fun\-Point p, vector$<$ double $>$ eval, int par1, int par2, double step=1e-\/2)}\label{classDaliBase_a23a77b29f9d2d66f01327220ed1a9440}
+
+\item 
+\hypertarget{classDaliBase_a1befad16dea2fdbd9e400e7a046f9b3f}{double {\bfseries third} (Mem\-Fun\-Point p, vector$<$ double $>$ eval, int par1, int par2, int par3, double step=1e-\/3)}\label{classDaliBase_a1befad16dea2fdbd9e400e7a046f9b3f}
+
+\item 
+virtual double \hyperlink{classDaliBase_ab19c9c960d914f5b8269237420deb8ca}{Phys\-Mod} (vector$<$ double $>$ pars\-\_\-and\-\_\-indep)=0
+\item 
+virtual double \hyperlink{classDaliBase_af8e98eb7184370d8d64b3b55bc395c6c}{Data\-Cov\-Matrix} (vector$<$ double $>$ pars, int i, int j)=0
+\item 
+virtual void \hyperlink{classDaliBase_ac0acf75f804718d75ba8ec375c342fad}{Declare\-Data} ()=0
+\item 
+\hypertarget{classDaliBase_a0c6137241ae1f7c543cd3b6694f5198f}{void {\bfseries Calc\-First\-Dmod} ()}\label{classDaliBase_a0c6137241ae1f7c543cd3b6694f5198f}
+
+\item 
+\hypertarget{classDaliBase_aca71df68c84675b37620437721696ef0}{void {\bfseries Calc\-Scnd\-Dmod} ()}\label{classDaliBase_aca71df68c84675b37620437721696ef0}
+
+\item 
+\hypertarget{classDaliBase_ac73f100410c08b92e448784bcc5bf6c1}{void {\bfseries Calc\-Thrd\-Dmod} ()}\label{classDaliBase_ac73f100410c08b92e448784bcc5bf6c1}
+
+\item 
+void \hyperlink{classDaliBase_aff17417c8d73ab2d75d8f54c7d1ea7d1}{Print\-First\-Dmod} ()
+\item 
+void \hyperlink{classDaliBase_a9ec7ff196ea59635727ba378b481aa40}{Print\-Scnd\-Dmod} ()
+\item 
+void \hyperlink{classDaliBase_a55b1ecf5e2f75758ef1aa7c6614bc642}{Print\-Thrd\-Dmod} ()
+\item 
+void \hyperlink{classDaliBase_a28df9c6ce107f5c8c1e757c2a5924d04}{Plot\-Matrix} (gsl\-\_\-matrix $\ast$To\-Be\-Plotted, int dim, string filesuffix)
+\item 
+\hypertarget{classDaliBase_add3632260f70ee5286d795f2e7f773d1}{void {\bfseries Fill\-Data\-Cov\-Mat} ()}\label{classDaliBase_add3632260f70ee5286d795f2e7f773d1}
+
+\item 
+\hypertarget{classDaliBase_ac63422e32e8fb16a9eda2b8da3a1f944}{void {\bfseries Dali\-Check\-Data\-Decl} ()}\label{classDaliBase_ac63422e32e8fb16a9eda2b8da3a1f944}
+
+\item 
+void \hyperlink{classDaliBase_af6ce56b286ef5f014c74ae9f83051e19}{Dali\-Save} (string filesuffix)
+\item 
+void \hyperlink{classDaliBase_a8cdc64cd3dd46ce4ce1a70f87061dda9}{Parameterdependence} (bool model, bool covmat)
+\item 
+void \hyperlink{classDaliBase_a8cd32906da8de171eff331ce09d256f2}{Set\-Steps} (double f\-\_\-step, double d\-\_\-step, double t\-\_\-step)
+\item 
+\hypertarget{classDaliBase_a0f273ab603afac40a8939e20a64feb80}{void {\bfseries Check\-Data\-Size} ()}\label{classDaliBase_a0f273ab603afac40a8939e20a64feb80}
+
+\item 
+void \hyperlink{classDaliBase_a75d9801166752bd17af5a30ca24aea20}{Set\-Verbosity} (int v)
+\item 
+void \hyperlink{classDaliBase_a29c3f9350f4f0990bd803814f4ec7137}{Set\-Diagonal} ()
+\item 
+void \hyperlink{classDaliBase_a23e24dbbfeadd57d77bfd7921863c744}{Conduct\-Recommended\-Checks} (int a)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classDaliBase_a85702051649d311856fe82ea32b1c7f1}{string {\bfseries outdir}}\label{classDaliBase_a85702051649d311856fe82ea32b1c7f1}
+
+\item 
+\hypertarget{classDaliBase_a0985d1e2f659e549ca34196015c75cb5}{bool {\bfseries modeldep}}\label{classDaliBase_a0985d1e2f659e549ca34196015c75cb5}
+
+\item 
+\hypertarget{classDaliBase_aa968c6982295a041de7106219a3c1ba3}{bool {\bfseries covmatdep}}\label{classDaliBase_aa968c6982295a041de7106219a3c1ba3}
+
+\item 
+\hypertarget{classDaliBase_a83a7d058afbf37e695915cb8782b2df3}{bool {\bfseries is\-\_\-diag}}\label{classDaliBase_a83a7d058afbf37e695915cb8782b2df3}
+
+\item 
+\hypertarget{classDaliBase_a9dc741756fbf9b438fcef52ba7ae2cd0}{int {\bfseries theodim}}\label{classDaliBase_a9dc741756fbf9b438fcef52ba7ae2cd0}
+
+\item 
+\hypertarget{classDaliBase_a191cbbcaaeb7ec14c1fe8bf4f7646e22}{int {\bfseries indepdim}}\label{classDaliBase_a191cbbcaaeb7ec14c1fe8bf4f7646e22}
+
+\item 
+int \hyperlink{classDaliBase_abbecb7f25a3040e674377cd9915f1183}{noofdat}
+\item 
+\hypertarget{classDaliBase_a18d2259363ec995e590a6ae96dee296a}{double {\bfseries fstep}}\label{classDaliBase_a18d2259363ec995e590a6ae96dee296a}
+
+\item 
+\hypertarget{classDaliBase_aabcb7e312a672ccc6f294934159f8fe4}{double {\bfseries dstep}}\label{classDaliBase_aabcb7e312a672ccc6f294934159f8fe4}
+
+\item 
+\hypertarget{classDaliBase_aa435a0b2ecdc1f9de7dd73705e22d610}{double {\bfseries tstep}}\label{classDaliBase_aa435a0b2ecdc1f9de7dd73705e22d610}
+
+\item 
+\hypertarget{classDaliBase_a2730078ea381c17ba37922b1c19ea7ec}{int {\bfseries verbosity}}\label{classDaliBase_a2730078ea381c17ba37922b1c19ea7ec}
+
+\item 
+\hypertarget{classDaliBase_aa73ef6f87c8e93d48c64611753eeb936}{int {\bfseries Recommended\-Checks}}\label{classDaliBase_aa73ef6f87c8e93d48c64611753eeb936}
+
+\item 
+vector$<$ vector$<$ double $>$ $>$ \hyperlink{classDaliBase_abe548366dfd28590f8db1f681bb1b77d}{datavaribs}
+\item 
+gsl\-\_\-matrix $\ast$ \hyperlink{classDaliBase_ac287ff97afe28a93bda558357beaee0d}{datapoint\-\_\-weights}
+\item 
+\hypertarget{classDaliBase_acc9bb2f0566d88a5876675ed3851b0b1}{gsl\-\_\-matrix $\ast$ {\bfseries fisher}}\label{classDaliBase_acc9bb2f0566d88a5876675ed3851b0b1}
+
+\item 
+\hypertarget{classDaliBase_a0afc645ad45078e4c3497fe71549a7d9}{vector$<$ vector$<$ vector$<$ double $>$ $>$ $>$ {\bfseries Sabg}}\label{classDaliBase_a0afc645ad45078e4c3497fe71549a7d9}
+
+\item 
+\hypertarget{classDaliBase_a431a69681b94c3e25c27726a4aad26e3}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ double $>$ $>$ $>$ $>$ {\bfseries Qabgd}}\label{classDaliBase_a431a69681b94c3e25c27726a4aad26e3}
+
+\item 
+\hypertarget{classDaliBase_a0d897fa7e8288582f858ea60f10fae0b}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ vector$<$ double $>$ $>$ $>$ $>$ $>$ {\bfseries Pabgde}}\label{classDaliBase_a0d897fa7e8288582f858ea60f10fae0b}
+
+\item 
+\hypertarget{classDaliBase_a2bc46d476c8f956d3c5484a6084e4ee3}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ vector$<$ vector$<$ double $>$ $>$ $>$ $>$ $>$ $>$ {\bfseries Habgdef}}\label{classDaliBase_a2bc46d476c8f956d3c5484a6084e4ee3}
+
+\item 
+\hypertarget{classDaliBase_a996d0fec050aec51231beca9c6382875}{vector$<$ vector$<$ vector$<$ int $>$ $>$ $>$ {\bfseries Sabg\-\_\-compute\-\_\-flags}}\label{classDaliBase_a996d0fec050aec51231beca9c6382875}
+
+\item 
+\hypertarget{classDaliBase_ae81009c7aa5c2114435908af78cff212}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ int $>$ $>$ $>$ $>$ {\bfseries Qabgd\-\_\-compute\-\_\-flags}}\label{classDaliBase_ae81009c7aa5c2114435908af78cff212}
+
+\item 
+\hypertarget{classDaliBase_ae861877710efbfc385397ad6b5deffa4}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ vector$<$ int $>$ $>$ $>$ $>$ $>$ {\bfseries Pabgde\-\_\-compute\-\_\-flags}}\label{classDaliBase_ae861877710efbfc385397ad6b5deffa4}
+
+\item 
+\hypertarget{classDaliBase_a020d41ac3e343416350cfbf913c2553d}{vector$<$ vector$<$ vector$<$ vector\\*
+$<$ vector$<$ vector$<$ int $>$ $>$ $>$ $>$ $>$ $>$ {\bfseries Habgdef\-\_\-compute\-\_\-flags}}\label{classDaliBase_a020d41ac3e343416350cfbf913c2553d}
+
+\item 
+\hypertarget{classDaliBase_a0d7bf539463c26a4dccb73f4c5839a12}{gsl\-\_\-matrix $\ast$ {\bfseries Data\-Cov}}\label{classDaliBase_a0d7bf539463c26a4dccb73f4c5839a12}
+
+\item 
+\hypertarget{classDaliBase_a7fd3532925487a8a6d9b5d2b00348b18}{gsl\-\_\-matrix $\ast$ {\bfseries Inv\-Data\-Cov}}\label{classDaliBase_a7fd3532925487a8a6d9b5d2b00348b18}
+
+\item 
+bool \hyperlink{classDaliBase_ac19be40e90cba3bdf8fc6a132b3d955d}{datavaribsdeclared}
+\item 
+\hypertarget{classDaliBase_a10faed76b3954280b83ff927d176acad}{bool {\bfseries checkd}}\label{classDaliBase_a10faed76b3954280b83ff927d176acad}
+
+\item 
+\hypertarget{classDaliBase_a3b9da5a51df20cdad2f8b8b7d707eb75}{bool {\bfseries checkdd}}\label{classDaliBase_a3b9da5a51df20cdad2f8b8b7d707eb75}
+
+\item 
+\hypertarget{classDaliBase_a6a36213fa6a2f994897540222aee0c41}{bool {\bfseries checkddd}}\label{classDaliBase_a6a36213fa6a2f994897540222aee0c41}
+
+\item 
+\hypertarget{classDaliBase_ad4bf365b7b5292a9ee12cceb2c4743a8}{bool {\bfseries covcheck}}\label{classDaliBase_ad4bf365b7b5292a9ee12cceb2c4743a8}
+
+\item 
+vector$<$ double $>$ \hyperlink{classDaliBase_ab132077315b2aadc9368a29baec1c8f0}{fid}
+\item 
+\hypertarget{classDaliBase_a5169cd6353fdccdad05f459ba72efee0}{vector$<$ gsl\-\_\-vector $\ast$ $>$ {\bfseries dmod}}\label{classDaliBase_a5169cd6353fdccdad05f459ba72efee0}
+
+\item 
+\hypertarget{classDaliBase_a36bc5d1fe8fc1d592de5b239f60b3359}{vector$<$ vector$<$ gsl\-\_\-vector $\ast$ $>$ $>$ {\bfseries ddmod}}\label{classDaliBase_a36bc5d1fe8fc1d592de5b239f60b3359}
+
+\item 
+\hypertarget{classDaliBase_acdd3a0c64d76685c699e05c07c3bc643}{vector$<$ vector$<$ vector\\*
+$<$ gsl\-\_\-vector $\ast$ $>$ $>$ $>$ {\bfseries dddmod}}\label{classDaliBase_acdd3a0c64d76685c699e05c07c3bc643}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classDaliBase_a7ea85e708de3877d9a771d93ea76d617}{\index{Dali\-Base@{Dali\-Base}!Dali\-Base@{Dali\-Base}}
+\index{Dali\-Base@{Dali\-Base}!DaliBase@{Dali\-Base}}
+\subsubsection[{Dali\-Base}]{\setlength{\rightskip}{0pt plus 5cm}Dali\-Base\-::\-Dali\-Base (
+\begin{DoxyParamCaption}
+\item[{int}]{theo, }
+\item[{int}]{indep, }
+\item[{int}]{noof, }
+\item[{vector$<$ double $>$}]{fidin, }
+\item[{string}]{outdir\-\_\-in}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a7ea85e708de3877d9a771d93ea76d617}
+Constructor of the \hyperlink{classDaliBase}{Dali\-Base} class. This constructor is automatically called by the code, and does not need to be acessed by the user. It initializes all the Dali tensors to zero, allocates memory and sets default values for various parameters.
+\begin{DoxyItemize}
+\item theo\-: the number of theoretical parameters that the user's application depends on
+\item indep\-: the number of independent variables that each data point contains. Maybe you have a case where a datapoint is a 3-\/dimensional direction, then you would like to store three coordinates per data point, and consequently you would put indep =3. -\/noof\-: the number of data points, where each data point is considered as one measurement that simultaneously had indep variables under control -\/fidin\-: a vector of length theo. It stores the fiducial values of your theoretical parameters/the maximum likelihood values of your theoretical parameters -\/outdir\-\_\-in\-: specifies the folder in which D\-A\-L\-I will store your results. If the folder does not exist, D\-A\-L\-I creates it 
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\hypertarget{classDaliBase_af6a34db604769e09853e8300dc17fd7c}{\index{Dali\-Base@{Dali\-Base}!Base\-Free@{Base\-Free}}
+\index{Base\-Free@{Base\-Free}!DaliBase@{Dali\-Base}}
+\subsubsection[{Base\-Free}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Base\-Free (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_af6a34db604769e09853e8300dc17fd7c}
+Deallocates the memory of all pointer-\/like members which D\-A\-L\-I uses \hypertarget{classDaliBase_a23e24dbbfeadd57d77bfd7921863c744}{\index{Dali\-Base@{Dali\-Base}!Conduct\-Recommended\-Checks@{Conduct\-Recommended\-Checks}}
+\index{Conduct\-Recommended\-Checks@{Conduct\-Recommended\-Checks}!DaliBase@{Dali\-Base}}
+\subsubsection[{Conduct\-Recommended\-Checks}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Conduct\-Recommended\-Checks (
+\begin{DoxyParamCaption}
+\item[{int}]{a}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a23e24dbbfeadd57d77bfd7921863c744}
+If a is greater than zero, the code will produce output files of the derivatives that the user has to check himself. \hypertarget{classDaliBase_af6ce56b286ef5f014c74ae9f83051e19}{\index{Dali\-Base@{Dali\-Base}!Dali\-Save@{Dali\-Save}}
+\index{Dali\-Save@{Dali\-Save}!DaliBase@{Dali\-Base}}
+\subsubsection[{Dali\-Save}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Dali\-Save (
+\begin{DoxyParamCaption}
+\item[{string}]{filesuffix}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_af6ce56b286ef5f014c74ae9f83051e19}
+Saves the Fisher matrix and the Dali tensors to separate files in the outdir. The formatting of the files is \char`\"{}index index index Sabg\-\_\-\-Tensor entry\char`\"{} in case of the Sabg-\/tensor. For the Fisher matrix and the higher order tensors the same formatting is chosen, just with more or less indices, separated by spaces. Keep in mind which index number refers to which parameter. A common question is\-: \char`\"{}\-Why are these tensors not invariant under all permutations
+  of the indices? Why is my Sabg\mbox{[}0\mbox{]}\mbox{[}0\mbox{]}\mbox{[}1\mbox{]} not the same as my Sabg\mbox{[}0\mbox{]}\mbox{[}1\mbox{]}\mbox{[}0\mbox{]}?\char`\"{} The reason is that the tensors here used are those of Eq.(14) in arxiv 1401.\-6892\-\_\-v2. -\/filesuffix\-: you may provide some suffix in order to identify the files. \hypertarget{classDaliBase_af8e98eb7184370d8d64b3b55bc395c6c}{\index{Dali\-Base@{Dali\-Base}!Data\-Cov\-Matrix@{Data\-Cov\-Matrix}}
+\index{Data\-Cov\-Matrix@{Data\-Cov\-Matrix}!DaliBase@{Dali\-Base}}
+\subsubsection[{Data\-Cov\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}virtual double Dali\-Base\-::\-Data\-Cov\-Matrix (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $>$}]{pars, }
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classDaliBase_af8e98eb7184370d8d64b3b55bc395c6c}
+A pure virtual function that must be overwritten by the user. See the Tutorial on how to achieve this.
+\begin{DoxyItemize}
+\item pars\-: is a vector of length theodim that holds the theoretical parameters.
+\item i and j\-: the entries/elements of the data covariance matrix. If your data covariance matrix depends on the data point datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]}, use i and j to access datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]}. The function shall return the (i,j)-\/element of the Data covariance matrix. 
+\end{DoxyItemize}\hypertarget{classDaliBase_ac0acf75f804718d75ba8ec375c342fad}{\index{Dali\-Base@{Dali\-Base}!Declare\-Data@{Declare\-Data}}
+\index{Declare\-Data@{Declare\-Data}!DaliBase@{Dali\-Base}}
+\subsubsection[{Declare\-Data}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Dali\-Base\-::\-Declare\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classDaliBase_ac0acf75f804718d75ba8ec375c342fad}
+A pure virtual function that must be overwritten by the user. The function must set the datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]}, where i runs in \mbox{[}0,noofdat-\/1\mbox{]} and j runs in \mbox{[}0,indep-\/1\mbox{]}. At constant i, datavaribs contains the complete ith measurement. The jth independent variable of the ith measurement is then datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]}. The function must end with \char`\"{}datavaribsdeclared=1;\char`\"{} This tells the code that it now knows the independent variables. \hypertarget{classDaliBase_a8cdc64cd3dd46ce4ce1a70f87061dda9}{\index{Dali\-Base@{Dali\-Base}!Parameterdependence@{Parameterdependence}}
+\index{Parameterdependence@{Parameterdependence}!DaliBase@{Dali\-Base}}
+\subsubsection[{Parameterdependence}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Parameterdependence (
+\begin{DoxyParamCaption}
+\item[{bool}]{model, }
+\item[{bool}]{covmat}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a8cdc64cd3dd46ce4ce1a70f87061dda9}
+Telling D\-A\-L\-I whether the model and/or the covariance matrix are parameter dependend. If model == 0, then the model is treated as parameter indepenend, if covmat == 0, then the covariance matrix is treated as independend, and no derivatives of the corresponding quantities will be calculated. This speeds up D\-A\-L\-I. \hypertarget{classDaliBase_ab19c9c960d914f5b8269237420deb8ca}{\index{Dali\-Base@{Dali\-Base}!Phys\-Mod@{Phys\-Mod}}
+\index{Phys\-Mod@{Phys\-Mod}!DaliBase@{Dali\-Base}}
+\subsubsection[{Phys\-Mod}]{\setlength{\rightskip}{0pt plus 5cm}virtual double Dali\-Base\-::\-Phys\-Mod (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $>$}]{pars\-\_\-and\-\_\-indep}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classDaliBase_ab19c9c960d914f5b8269237420deb8ca}
+A pure virtual function that must be overwritten by the user. The vector pars\-\_\-and\-\_\-indep has length theodim+indep. Its first theodim entries are reserved for the parameters, its last indep entries are reserved for independent variables. The function shall return the modelprediction as a function of the theoretical parameters and the independent variables. The ordering is important\-: The code will only take derivatives of this function with respect to its first theodim parameters. \hypertarget{classDaliBase_a28df9c6ce107f5c8c1e757c2a5924d04}{\index{Dali\-Base@{Dali\-Base}!Plot\-Matrix@{Plot\-Matrix}}
+\index{Plot\-Matrix@{Plot\-Matrix}!DaliBase@{Dali\-Base}}
+\subsubsection[{Plot\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Plot\-Matrix (
+\begin{DoxyParamCaption}
+\item[{gsl\-\_\-matrix $\ast$}]{To\-Be\-Plotted, }
+\item[{int}]{dim, }
+\item[{string}]{filesuffix}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a28df9c6ce107f5c8c1e757c2a5924d04}
+Creates a file that allows to plot a square matrix. This can be used in order to check whether the derivatives of the covariance matrix seem okay. \hypertarget{classDaliBase_aff17417c8d73ab2d75d8f54c7d1ea7d1}{\index{Dali\-Base@{Dali\-Base}!Print\-First\-Dmod@{Print\-First\-Dmod}}
+\index{Print\-First\-Dmod@{Print\-First\-Dmod}!DaliBase@{Dali\-Base}}
+\subsubsection[{Print\-First\-Dmod}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Print\-First\-Dmod (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_aff17417c8d73ab2d75d8f54c7d1ea7d1}
+Prints the first derivatives of the model to a file. Plotting them allows to check whether the finite difference has been adjusted appropriately. \hypertarget{classDaliBase_a9ec7ff196ea59635727ba378b481aa40}{\index{Dali\-Base@{Dali\-Base}!Print\-Scnd\-Dmod@{Print\-Scnd\-Dmod}}
+\index{Print\-Scnd\-Dmod@{Print\-Scnd\-Dmod}!DaliBase@{Dali\-Base}}
+\subsubsection[{Print\-Scnd\-Dmod}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Print\-Scnd\-Dmod (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a9ec7ff196ea59635727ba378b481aa40}
+Writes the second derivatives of the model to the file outdir/\-Second\-Derivs \hypertarget{classDaliBase_a55b1ecf5e2f75758ef1aa7c6614bc642}{\index{Dali\-Base@{Dali\-Base}!Print\-Thrd\-Dmod@{Print\-Thrd\-Dmod}}
+\index{Print\-Thrd\-Dmod@{Print\-Thrd\-Dmod}!DaliBase@{Dali\-Base}}
+\subsubsection[{Print\-Thrd\-Dmod}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Print\-Thrd\-Dmod (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a55b1ecf5e2f75758ef1aa7c6614bc642}
+Writes the third derivatives of the model to the file outdir/\-Third\-Derivs \hypertarget{classDaliBase_a29c3f9350f4f0990bd803814f4ec7137}{\index{Dali\-Base@{Dali\-Base}!Set\-Diagonal@{Set\-Diagonal}}
+\index{Set\-Diagonal@{Set\-Diagonal}!DaliBase@{Dali\-Base}}
+\subsubsection[{Set\-Diagonal}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Set\-Diagonal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a29c3f9350f4f0990bd803814f4ec7137}
+If the data covariance matrix is diagonal, the user can call this member function to speed up the execution of the code. \hypertarget{classDaliBase_a8cd32906da8de171eff331ce09d256f2}{\index{Dali\-Base@{Dali\-Base}!Set\-Steps@{Set\-Steps}}
+\index{Set\-Steps@{Set\-Steps}!DaliBase@{Dali\-Base}}
+\subsubsection[{Set\-Steps}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Set\-Steps (
+\begin{DoxyParamCaption}
+\item[{double}]{f\-\_\-step, }
+\item[{double}]{d\-\_\-step, }
+\item[{double}]{t\-\_\-step}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a8cd32906da8de171eff331ce09d256f2}
+Allows the user to change the finite difference steps, that are used for the numerical evaluation of the derivatives for the M\-O\-D\-E\-L. A corresponding function exists for the finite difference steps for the covariance matrix. -\/f\-\_\-step\-: the finite difference step for the first derivatives of the model -\/d\-\_\-step\-: for the second derivatives of the model -\/t\-\_\-step\-: for the thrid derivatives of the model \hypertarget{classDaliBase_a75d9801166752bd17af5a30ca24aea20}{\index{Dali\-Base@{Dali\-Base}!Set\-Verbosity@{Set\-Verbosity}}
+\index{Set\-Verbosity@{Set\-Verbosity}!DaliBase@{Dali\-Base}}
+\subsubsection[{Set\-Verbosity}]{\setlength{\rightskip}{0pt plus 5cm}void Dali\-Base\-::\-Set\-Verbosity (
+\begin{DoxyParamCaption}
+\item[{int}]{v}
+\end{DoxyParamCaption}
+)}}\label{classDaliBase_a75d9801166752bd17af5a30ca24aea20}
+If v $>$ 1, the code will print more messages to the screen. 
+
+\subsection{Member Data Documentation}
+\hypertarget{classDaliBase_ac287ff97afe28a93bda558357beaee0d}{\index{Dali\-Base@{Dali\-Base}!datapoint\-\_\-weights@{datapoint\-\_\-weights}}
+\index{datapoint\-\_\-weights@{datapoint\-\_\-weights}!DaliBase@{Dali\-Base}}
+\subsubsection[{datapoint\-\_\-weights}]{\setlength{\rightskip}{0pt plus 5cm}gsl\-\_\-matrix$\ast$ Dali\-Base\-::datapoint\-\_\-weights}}\label{classDaliBase_ac287ff97afe28a93bda558357beaee0d}
+A gsl\-\_\-matrix$\ast$ that allows you to multiply data points with a weight. The weights must be constant; i.\-e. they cannot depend on parameters. Abbreviating the datapoint\-\_\-weights matrix by W, the loglikelihood is given by L = -\/1/2 ( (\{d\} -\/ \{m\}) W C$^\wedge$\{-\/1\} (\{d\} -\/ \{m\} ) ). \hypertarget{classDaliBase_abe548366dfd28590f8db1f681bb1b77d}{\index{Dali\-Base@{Dali\-Base}!datavaribs@{datavaribs}}
+\index{datavaribs@{datavaribs}!DaliBase@{Dali\-Base}}
+\subsubsection[{datavaribs}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$vector$<$ double $>$ $>$ Dali\-Base\-::datavaribs}}\label{classDaliBase_abe548366dfd28590f8db1f681bb1b77d}
+$\ast$\-Storage room for the data. The structure $<$vector$<$vector$<$double $>$ $>$ works like a C-\/array ar\mbox{[}i\mbox{]}\mbox{[}j\mbox{]}, and is also called like this\-: datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]} is the jth independent variable if the ith datapoint. I.\-e. each datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]} is of type double. Each datavaribs\mbox{[}i\mbox{]} is a vector of doubles. Each of the vectors datavaribs\mbox{[}i\mbox{]} will later be inserted into the Phys\-Mod, as a point where derivatives are taken. Make sure to correctly distribute your data into this array. If you have 50 data points, the index i of datavaribs\mbox{[}i\mbox{]}\mbox{[}j\mbox{]} will run from 0 to 49. If you have only one independent variable, only datavaribs\mbox{[}i\mbox{]}\mbox{[}0\mbox{]} will exist. So a cosmologist could for example set datavaribs\mbox{[}i\mbox{]}\mbox{[}0\mbox{]} = redshift\mbox{[}i\mbox{]}. The code resizes datavaribs for you\-: it will have dimensions noofdat (the number of datapoints) times indep (the number of independent variables). Do not resize this vector to your convenience! Also don't use push\-\_\-back(). \hypertarget{classDaliBase_ac19be40e90cba3bdf8fc6a132b3d955d}{\index{Dali\-Base@{Dali\-Base}!datavaribsdeclared@{datavaribsdeclared}}
+\index{datavaribsdeclared@{datavaribsdeclared}!DaliBase@{Dali\-Base}}
+\subsubsection[{datavaribsdeclared}]{\setlength{\rightskip}{0pt plus 5cm}bool Dali\-Base\-::datavaribsdeclared}}\label{classDaliBase_ac19be40e90cba3bdf8fc6a132b3d955d}
+A flag that must be set by the function \hyperlink{classDaliBase_ac0acf75f804718d75ba8ec375c342fad}{Declare\-Data()}, after the user has stored the data in the vector datavaribs \hypertarget{classDaliBase_ab132077315b2aadc9368a29baec1c8f0}{\index{Dali\-Base@{Dali\-Base}!fid@{fid}}
+\index{fid@{fid}!DaliBase@{Dali\-Base}}
+\subsubsection[{fid}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$double$>$ Dali\-Base\-::fid}}\label{classDaliBase_ab132077315b2aadc9368a29baec1c8f0}
+Stores the values of the parameters at the maximum likelihood point (for forecasting, this is also called 'the fiducial'. At this point, D\-A\-L\-I will evaluate the derivatives. The resulting D\-A\-L\-I-\/tensors will depend on the choice of the fiducial point! If you change the fiducial, you will have to recalculate your tensors. \hypertarget{classDaliBase_abbecb7f25a3040e674377cd9915f1183}{\index{Dali\-Base@{Dali\-Base}!noofdat@{noofdat}}
+\index{noofdat@{noofdat}!DaliBase@{Dali\-Base}}
+\subsubsection[{noofdat}]{\setlength{\rightskip}{0pt plus 5cm}int Dali\-Base\-::noofdat}}\label{classDaliBase_abbecb7f25a3040e674377cd9915f1183}
+The number of data points. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Dali\-Base.\-h\item 
+Dali\-Base.\-cpp\end{DoxyCompactItemize}
