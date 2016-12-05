@@ -334,7 +334,7 @@ void pythoncontours(vector<double> testprob, int xcount, int ycount, string exec
 
     fprintf(pythonex, "xi2 = np.reshape(x2,(-1,N2x))\nyi2 = np.reshape(y2,(-1,N2y))\nzi2 = np.reshape(z2,(-1,N2x))\n");
     fprintf(pythonex, "print \"plotting...\"\n");
-    fprintf(pythonex, "levels2 = [%.3e,%.3e,%.3e]\n",contsig1, contsig2, contsig3);
+    fprintf(pythonex, "levels2 = [%.3e,%.3e,%.3e]\n",contsig3, contsig2, contsig1);
     fprintf(pythonex, "CS2 = plt.contour(xi2, yi2, zi2, levels2, colors = ('navy','steelblue'),linewidths = (2),origin = origin)\n");
     fprintf(pythonex, "plt.xlabel(r'%s')\nplt.ylabel(r'%s')\n",xaxis.c_str(),yaxis.c_str());
     fprintf(pythonex, "\n");
